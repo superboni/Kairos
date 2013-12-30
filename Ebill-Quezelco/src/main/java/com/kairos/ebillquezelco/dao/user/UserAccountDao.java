@@ -9,7 +9,8 @@ import com.kairos.ebillquezelco.domain.user.UserAccount;
 public interface UserAccountDao extends GenericDao<UserAccount, String> {
 
 	public List<UserAccount> getByName(String name);
-	public UserAccount getByEmail(String email);
+	public UserAccount getByUsername(String username);
 	public List<UserAccount> getByCreatedDate(Date cDate);
+	public List<UserAccount> getAllEnabled();
 	
 }

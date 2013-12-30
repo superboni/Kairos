@@ -21,10 +21,10 @@ public class UserAccountDaoImpl extends GenericDaoImpl<UserAccount, String> impl
 	public List<UserAccount> getByName(String name) {
 		Query qry = entityManager.createQuery(
 				"SELECT ua FROM UserAccount ua " +
-				"WHERE LOWER(ua.firstName) like '%:name%' " +
-				"OR LOWER(ua.lastName) like '%:name%' " +
-				"OR LOWER (ua.middleName) like '%:name%'" );
-		qry.setParameter("name", name.toLowerCase());
+				"WHERE LOWER(ua.firstName) like :name " +
+				"OR LOWER(ua.lastName) like :name " +
+				"OR LOWER (ua.middleName) like :name" );
+		qry.setParameter("name", "%" + name.toLowerCase() + "%");
 		return (List<UserAccount>) qry.getResultList();
 	}
 
@@ -39,12 +39,21 @@ public class UserAccountDaoImpl extends GenericDaoImpl<UserAccount, String> impl
 	}
 	
 	@Override
-	public UserAccount getByEmail(String email) {
+	public UserAccount getByUsername(String username) {
 		Query qry = entityManager.createQuery(
 				"SELECT ua FROM UserAccount ua " +
-				"WHERE LOWER(ua.email) like '%:email%'");
-		qry.setParameter("email", email.toLowerCase());
+				"WHERE LOWER(ua.username) = :username");
+		qry.setParameter("username", username.toLowerCase());
 		return (UserAccount) qry.getSingleResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserAccount> getAllEnabled() {
+		Query qry = entityManager.createQuery(
+				"SELECT ua FROM UserAccount ua " + 
+				"WHERE enabled = 1");
+		return (List<UserAccount>) qry.getResultList();
 	}
 	
 	

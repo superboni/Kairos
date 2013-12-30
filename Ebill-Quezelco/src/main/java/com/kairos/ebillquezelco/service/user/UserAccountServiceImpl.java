@@ -25,11 +25,11 @@ public class UserAccountServiceImpl implements UserAccountService{
 	public void create(UserAccount userAccount) {
 		try {
 			if (userAccount!=null) {
-				logger.debug("Creating a new UserAccount entity: " + userAccount.toString());
+				logger.info("Creating a new UserAccount entity: " + userAccount.toString());
 				userAccountDao.create(userAccount);
 			}
 		} catch (RuntimeException e) {
-			logger.debug(e.getStackTrace().toString());
+			logger.debug(e.getLocalizedMessage());
 		}
 	}
 
@@ -37,21 +37,21 @@ public class UserAccountServiceImpl implements UserAccountService{
 	public void update(UserAccount userAccount) {
 		try {
 			if (userAccount!=null) {
-				logger.debug("Updating the UserAccount entity: " + userAccount.toString());
+				logger.info("Updating the UserAccount entity: " + userAccount.toString());
 				userAccountDao.update(userAccount);
 			}
 		} catch (RuntimeException e) {
-			logger.debug(e.getStackTrace().toString());
+			logger.debug(e.getLocalizedMessage());
 		}
 	}
 
 	@Override
 	public List<UserAccount> getAll() {
-		logger.debug("Retrieving all UserAccount entities");
+		logger.info("Retrieving all UserAccount entities");
 		try {
 			return userAccountDao.getAll();
 		} catch (RuntimeException e) {
-			logger.debug(e.getStackTrace().toString());
+			logger.debug(e.getLocalizedMessage());
 			return null;
 		}
 	}
@@ -61,11 +61,11 @@ public class UserAccountServiceImpl implements UserAccountService{
 		List<UserAccount> userAccounts = new ArrayList<UserAccount>();
 		try {
 			if (name!=null) {
-				logger.debug("Retrieving UserAccount entities with name: " + name);
+				logger.info("Retrieving UserAccount entities with name: " + name);
 				userAccounts = userAccountDao.getByName(name);
 			}
 		} catch (RuntimeException e) {
-			logger.debug(e.getStackTrace().toString());
+			logger.debug(e.getLocalizedMessage());
 		}
 		return userAccounts;
 	}
@@ -75,27 +75,38 @@ public class UserAccountServiceImpl implements UserAccountService{
 		UserAccount userAccount = new UserAccount();
 		try {
 			if (pk!=null) {
-				logger.debug("Retrieving UserAccount entity with id: " + pk);
+				logger.info("Retrieving UserAccount entity with id: " + pk);
 				userAccount = userAccountDao.getById(pk);
 			}
 		} catch (RuntimeException e) {
-			logger.debug(e.getStackTrace().toString());
+			logger.debug(e.getLocalizedMessage());
 		}
 		return userAccount;
 	}
 
 	@Override
-	public UserAccount getByEmail(String email) {
+	public UserAccount getByUsername(String username) {
 		UserAccount userAccount = new UserAccount();
 		try {
-			if (email!=null) {
-				logger.debug("Retrieving UserAccount entity with email: " + email);
-				userAccount = userAccountDao.getByEmail(email);
+			if (username!=null) {
+				logger.info("Retrieving UserAccount entity with username: " + username);
+				userAccount = userAccountDao.getByUsername(username);
 			}
 		} catch (RuntimeException e) {
-			logger.debug(e.getStackTrace().toString());
+			logger.debug(e.getLocalizedMessage());
 		}
 		return userAccount;
+	}
+
+	@Override
+	public List<UserAccount> getAllEnabled() {
+		logger.info("Retrieving all Enabled UserAccount entities");
+		try {
+			return userAccountDao.getAllEnabled();
+		} catch (RuntimeException e) {
+			logger.debug(e.getLocalizedMessage());
+			return null;
+		}
 	}
 	
 }

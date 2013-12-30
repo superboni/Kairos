@@ -8,25 +8,29 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="tblUserAccount")
 public class UserAccount implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 826727317693096390L;
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	
 	private String firstName;
 	
 	private String middleName;
 	
 	private String lastName;
-	
+
+	@Transient
+	private String fullName;
+
 	@Column(unique=true)
-	private String email;
+	private String username;
 	
 	private String password;
 	
@@ -34,10 +38,10 @@ public class UserAccount implements Serializable {
 	
 	private Boolean enabled;
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getFirstName() {
@@ -58,12 +62,6 @@ public class UserAccount implements Serializable {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
 	public String getPassword() {
 		return password;
 	}
@@ -82,7 +80,18 @@ public class UserAccount implements Serializable {
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
-	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getFullName() {
+		return fullName = middleName != null 
+						? firstName + " " + middleName.substring(0, 1) + ". " + lastName 
+						: firstName + " " + lastName;
+	}
+
 	@Override
 	public String toString() {
 		return "UserAccount: " +
@@ -90,11 +99,10 @@ public class UserAccount implements Serializable {
 				this.firstName + " " + 
 				this.lastName + " " + 
 				this.middleName + " " + 
-				this.email + " " + 
+				this.username + " " + 
 				this.password + " " + 
 				String.valueOf(this.dateCreated) + " " + 
 				String.valueOf(this.enabled);
 	}
-	
 	
 }

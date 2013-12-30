@@ -30,9 +30,9 @@ public class JPAConfig {
     private String password;
     @Value("${hibernate.dialect}")
     private String dialect;
-    @Value("${hibernate.hbm2ddl.auto}")
+/*    @Value("${hibernate.hbm2ddl.auto}")
     private String hbm2ddlAuto;
-
+*/
     @Bean
     public DataSource dataSourceConfig(){
     	DriverManagerDataSource ds = new DriverManagerDataSource();
@@ -52,7 +52,7 @@ public class JPAConfig {
     	
     	Properties jpaProperties = new Properties();
     	jpaProperties.put(org.hibernate.cfg.Environment.DIALECT, dialect);
-    	jpaProperties.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO, hbm2ddlAuto);
+    	//jpaProperties.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO, hbm2ddlAuto);
     	entityManagerFactoryBean.setJpaProperties(jpaProperties);
     	
     	return entityManagerFactoryBean;
