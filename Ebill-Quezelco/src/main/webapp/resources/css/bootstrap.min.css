@@ -26,7 +26,9 @@ html {
 }
 
 body {
-	margin: 0
+	margin: 0;
+	padding-top: 60px;
+	padding-bottom: 40px
 }
 
 a {
@@ -261,7 +263,7 @@ body {
 	font-size: 14px;
 	line-height: 1.428571429;
 	color: #666;
-	background-color: #fff
+	background-color: #f5f5f5
 }
 
 input,button,select,textarea {
@@ -2035,7 +2037,7 @@ textarea.input-lg {
 
 @media ( min-width :768px) {
 	.form-horizontal .control-label {
-		text-align: right
+		text-align: left
 	}
 }
 
@@ -7004,3 +7006,21 @@ th.hidden-lg,td.hidden-lg {
 .affix {
 	position: fixed
 }
+
+
+/* - ADDITIONS - */
+
+.form-narrow {
+    max-width: 400px;
+    padding: 19px 29px 29px;
+    margin: 0 auto 20px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+       -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            box-shadow: 0 1px 2px rgba(0,0,0,.05)
+}
+

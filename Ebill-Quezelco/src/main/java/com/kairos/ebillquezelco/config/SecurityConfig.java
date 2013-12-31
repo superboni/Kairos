@@ -1,9 +1,19 @@
 package com.kairos.ebillquezelco.config;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,35 +23,78 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService);
-		
-		/*auth
-        .inMemoryAuthentication()
-            .withUser("user").password("password").roles("USER").and()
-            .withUser("admin").password("password").roles("USER", "ADMIN");*/
-		
-		/*List<UserAccount> userAccounts = new ArrayList<UserAccount>();
-		userAccounts = userAccountService.getAll();
-		auth.eraseCredentials(true);
-		auth.userDetailsService(userAccountService);
-		for (UserAccount user : userAccounts) {
-			auth
-	        .inMemoryAuthentication()
-	            .withUser(user.getUsername()).password(user.getPassword()).roles("USER", "ADMIN");
-		}*/
-	    
+    private MessageSource messageSource;
+    
+	@Bean
+	public DaoAuthenticationProvider daoAuthenticationProvider() {
+		DaoAuthenticationProvider dao = new DaoAuthenticationProvider();
+		dao.setUserDetailsService(userDetailsService);
+		//dao.setPasswordEncoder(passwordEncoder());
+		dao.setMessageSource(messageSource);
+		return dao;
 	}
 	
 	@Bean
+	public ProviderManager providerManager() {
+		List<AuthenticationProvider> list = new ArrayList<AuthenticationProvider>();
+		list.add(daoAuthenticationProvider());
+		return new ProviderManager(list);
+	}
+
+	/*@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}*/
+	
+	@Autowired
+	public void authenticationManager(AuthenticationManagerBuilder auth) {
+		auth
+			.eraseCredentials(true)
+			.authenticationProvider(daoAuthenticationProvider());
 	}
+	
+	@Configuration
+    @Order(1)
+    public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                .antMatcher("/api/**")
+                .authorizeRequests()
+                    .antMatchers("/api/admin/**").hasRole("ADMIN")
+                    .antMatchers("/api/**").hasRole("USER")
+                    .and()
+                .httpBasic();
+        }
+    }
+
+    @Configuration
+    public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+        @Override
+        public void configure(WebSecurity web) throws Exception {
+            web
+                .ignoring()
+                    .antMatchers("/resources/**");
+        }
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+        	http
+        	.csrf()
+        		.disable()
+            .authorizeRequests()
+                .antMatchers("/login").permitAll()
+                .anyRequest().authenticated()
+                .and()
+            .formLogin()
+                .loginPage("/login")
+                .permitAll();
+        }
+    }
 	
 }
