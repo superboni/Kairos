@@ -1,10 +1,12 @@
 package com.kairos.ebillquezelco.domain.user;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -17,6 +19,11 @@ public class Roles implements Serializable {
 	@GeneratedValue
 	private Long id;
 	
+	private String role;
+	
+	@ManyToMany(mappedBy = "roles")
+	private List<UserAccount> users;
+	
 	public Long getId() {
 		return id;
 	}
@@ -25,9 +32,6 @@ public class Roles implements Serializable {
 		this.id = id;
 	}
 
-	private String role;
-	
-
 	public String getRole() {
 		return role;
 	}
@@ -35,5 +39,14 @@ public class Roles implements Serializable {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+	public List<UserAccount> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<UserAccount> users) {
+		this.users = users;
+	}
+
 
 }

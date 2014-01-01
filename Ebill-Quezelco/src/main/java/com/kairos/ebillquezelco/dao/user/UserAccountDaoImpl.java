@@ -23,7 +23,8 @@ public class UserAccountDaoImpl extends GenericDaoImpl<UserAccount, String> impl
 				"SELECT ua FROM UserAccount ua " +
 				"WHERE LOWER(ua.firstName) like :name " +
 				"OR LOWER(ua.lastName) like :name " +
-				"OR LOWER (ua.middleName) like :name" );
+				"OR LOWER (ua.middleName) like :name " +
+				"AND enabled = 1");
 		qry.setParameter("name", "%" + name.toLowerCase() + "%");
 		return (List<UserAccount>) qry.getResultList();
 	}
@@ -33,7 +34,8 @@ public class UserAccountDaoImpl extends GenericDaoImpl<UserAccount, String> impl
 	public List<UserAccount> getByCreatedDate(Date cDate) {
 		Query qry = entityManager.createQuery(
 				"SELECT ua FROM UserAccount ua " +
-				"WHERE dateCreated = :cDate");
+				"WHERE dateCreated = :cDate " +
+				"AND enabled = 1");
 		qry.setParameter("cDate", cDate);
 		return (List<UserAccount>) qry.getResultList();
 	}
@@ -42,7 +44,8 @@ public class UserAccountDaoImpl extends GenericDaoImpl<UserAccount, String> impl
 	public UserAccount getByUsername(String username) {
 		Query qry = entityManager.createQuery(
 				"SELECT ua FROM UserAccount ua " +
-				"WHERE LOWER(ua.username) = :username");
+				"WHERE LOWER(ua.username) = :username " +
+				"AND enabled = 1");
 		qry.setParameter("username", username.toLowerCase());
 		return (UserAccount) qry.getSingleResult();
 	}
@@ -55,6 +58,5 @@ public class UserAccountDaoImpl extends GenericDaoImpl<UserAccount, String> impl
 				"WHERE enabled = 1");
 		return (List<UserAccount>) qry.getResultList();
 	}
-	
 	
 }

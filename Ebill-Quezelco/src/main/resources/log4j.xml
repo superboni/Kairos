@@ -32,13 +32,13 @@
 		<level value="info" />
 	</logger>
 	
-	<!-- Show HQL String and Actual Type Values 
+	<!-- Show HQL String and Actual Type Values -->
 	<logger name="org.hibernate.SQL">
 		<level value="info, debug, error" />
 	</logger>
 	<logger name="org.hibernate.bind">
 		<level value="info, debug, error" />
-	</logger> -->
+	</logger>
 
 	<!-- Root Logger -->
 	<root>

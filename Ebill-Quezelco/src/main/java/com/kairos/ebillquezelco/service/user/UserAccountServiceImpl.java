@@ -47,9 +47,9 @@ public class UserAccountServiceImpl implements UserAccountService{
 
 	@Override
 	public List<UserAccount> getAll() {
-		logger.info("Retrieving all UserAccount entities");
+		logger.info("Retrieving all active UserAccount entities");
 		try {
-			return userAccountDao.getAll();
+			return userAccountDao.getAllEnabled();
 		} catch (RuntimeException e) {
 			logger.debug(e.getLocalizedMessage());
 			return null;

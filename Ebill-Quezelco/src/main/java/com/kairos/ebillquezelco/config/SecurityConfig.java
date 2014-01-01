@@ -17,8 +17,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 
 
 @Configuration
@@ -31,6 +30,11 @@ public class SecurityConfig {
 	@Autowired
     private MessageSource messageSource;
     
+	@Bean
+	public TokenBasedRememberMeServices rememberMeServices() {
+		return new TokenBasedRememberMeServices("remember-me-key", userDetailsService);
+	}
+	
 	@Bean
 	public DaoAuthenticationProvider daoAuthenticationProvider() {
 		DaoAuthenticationProvider dao = new DaoAuthenticationProvider();
@@ -93,7 +97,15 @@ public class SecurityConfig {
                 .and()
             .formLogin()
                 .loginPage("/login")
-                .permitAll();
+                	.usernameParameter("secUsername")
+                	.passwordParameter("secPassword")
+                .permitAll()
+                .and()
+            .rememberMe()
+            	.key("remember-me-key")
+            	.and()
+            .logout()
+            	.logoutUrl("/logout");
         }
     }
 	

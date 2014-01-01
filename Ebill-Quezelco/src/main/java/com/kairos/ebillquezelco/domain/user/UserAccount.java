@@ -2,11 +2,15 @@ package com.kairos.ebillquezelco.domain.user;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -37,6 +41,12 @@ public class UserAccount implements Serializable {
 	private Date dateCreated;
 	
 	private Boolean enabled;
+	
+	@ManyToMany
+	@JoinTable(name="tblUserRoles",
+			joinColumns=@JoinColumn(name="user"),
+			inverseJoinColumns=@JoinColumn(name="role"))
+	private List<Roles> roles;
 	
 	public Long getId() {
 		return id;
@@ -91,7 +101,12 @@ public class UserAccount implements Serializable {
 						? firstName + " " + middleName.substring(0, 1) + ". " + lastName 
 						: firstName + " " + lastName;
 	}
-
+	public List<Roles> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<Roles> roles) {
+		this.roles = roles;
+	}
 	@Override
 	public String toString() {
 		return "UserAccount: " +

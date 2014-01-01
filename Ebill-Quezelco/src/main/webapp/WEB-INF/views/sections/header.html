@@ -1,30 +1,65 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
+    <script src="/resources/js/jquery.js" th:src="@{/resources/js/jquery.js}"></script>
+    <script src="/resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
     <link href="/resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>QUEZELCO - Online Billing and Monitoring System</title>
 </head>
 <body>
-	<div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
-	    <div class="container">
-	        <div class="navbar-header">
-	            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-	            </button>
-	            <a class="navbar-brand" href="#" th:href="@{/}">Quezelco</a>
-	        </div>
-	        <div class="navbar-collapse collapse">
-	            <ul class="nav navbar-nav">
-	                <li class="active"><a href="#" th:href="@{/}">Home</a></li>
-	                <li class="active"><a href="#" th:href="@{/}">Reports</a></li>
-	                <li class="active"><a href="#" th:href="@{/}">Maintenance</a></li>
-	            </ul>
-	            <ul class="nav navbar-nav navbar-right">
-					<!-- <li><a href="/signin" th:href="@{/signin}">Sign in</a></li>
-	                <li><a href="/logout" th:href="@{/logout}">Logout</a></li> -->
-	            </ul>
-	        </div>
-	        <!--/.nav-collapse -->
-	    </div>
+	<div class="navbar navbar-default navbar-fixed-top" th:fragment="header" id="navbar-main">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#" th:href="@{/}">Quezelco</a>
+				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="#" th:href="@{/}">Home</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-header">Billing</li>
+							<li><a href="#" th:href="@{/}">Bill type 1</a></li>
+							<li><a href="#" th:href="@{/}">Bill type 2</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-header">Administrative</li>
+							<li><a href="#" th:href="@{/}">Client Reports</a></li>
+							<li><a href="#" th:href="@{/}">Town Reports</a></li>
+							<li><a href="#" th:href="@{/}">Audit Trail</a></li>
+						</ul>
+					</li>
+					<li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">System Maintenance <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="/useraccounts" th:href="@{/useraccounts}">
+									Manage User Accounts
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li><a href="#" th:href="@{/}">Help</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li th:if="${#authorization.expression('isAuthenticated()')}" class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							Welcome <span sec:authentication="name">x</span>! <b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-header"><span sec:authentication="authorities">x</span></li>
+							<li class="divider"></li>
+							<li><a href="/logout" th:href="@{/logout}">Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
