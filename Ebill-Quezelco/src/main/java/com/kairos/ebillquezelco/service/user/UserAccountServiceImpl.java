@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,16 +21,23 @@ public class UserAccountServiceImpl implements UserAccountService{
 	
 	@Autowired
 	private UserAccountDao userAccountDao;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder; 
 
 	@Override
 	public void create(UserAccount userAccount) {
 		try {
 			if (userAccount!=null) {
+				//Set to default enabled value
+				userAccount.setEnabled(true);
+				//Encrypt password before storing to DB
+				userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
 				logger.info("Creating a new UserAccount entity: " + userAccount.toString());
 				userAccountDao.create(userAccount);
 			}
 		} catch (RuntimeException e) {
-			logger.debug(e.getLocalizedMessage());
+			logger.debug(e.getMessage());
 		}
 	}
 
@@ -41,7 +49,7 @@ public class UserAccountServiceImpl implements UserAccountService{
 				userAccountDao.update(userAccount);
 			}
 		} catch (RuntimeException e) {
-			logger.debug(e.getLocalizedMessage());
+			logger.debug(e.getMessage());
 		}
 	}
 
@@ -51,7 +59,7 @@ public class UserAccountServiceImpl implements UserAccountService{
 		try {
 			return userAccountDao.getAllEnabled();
 		} catch (RuntimeException e) {
-			logger.debug(e.getLocalizedMessage());
+			logger.debug(e.getMessage());
 			return null;
 		}
 	}
@@ -65,7 +73,7 @@ public class UserAccountServiceImpl implements UserAccountService{
 				userAccounts = userAccountDao.getByName(name);
 			}
 		} catch (RuntimeException e) {
-			logger.debug(e.getLocalizedMessage());
+			logger.debug(e.getMessage());
 		}
 		return userAccounts;
 	}
@@ -79,7 +87,7 @@ public class UserAccountServiceImpl implements UserAccountService{
 				userAccount = userAccountDao.getById(pk);
 			}
 		} catch (RuntimeException e) {
-			logger.debug(e.getLocalizedMessage());
+			logger.debug(e.getMessage());
 		}
 		return userAccount;
 	}
@@ -93,7 +101,7 @@ public class UserAccountServiceImpl implements UserAccountService{
 				userAccount = userAccountDao.getByUsername(username);
 			}
 		} catch (RuntimeException e) {
-			logger.debug(e.getLocalizedMessage());
+			logger.debug(e.getMessage());
 		}
 		return userAccount;
 	}
@@ -104,7 +112,7 @@ public class UserAccountServiceImpl implements UserAccountService{
 		try {
 			return userAccountDao.getAllEnabled();
 		} catch (RuntimeException e) {
-			logger.debug(e.getLocalizedMessage());
+			logger.debug(e.getMessage());
 			return null;
 		}
 	}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="sections/headtag">
+</head>
+<body>
+	<div th:replace="sections/header">&nbsp;</div>
+
+	<div class="container col-lg-6 well">
+		<form method="post" th:action="@{/users/add}" class="form-horizontal">
+			<fieldset>
+				<legend>Add a user:</legend>
+				<table class="table">
+					<tbody>
+						<tr>
+							<td>
+								<div class="col-lg-6">
+									<input type="text" placeholder="First Name" name="firstName" class="form-control" />
+								</div>
+								<div class="col-lg-6">
+									<input type="text" placeholder="Middle Name" name="middleName" class="form-control" />
+								</div>
+								<div class="col-lg-6">
+									<input type="text" placeholder="LastName" name="lastName" class="form-control" />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="col-lg-6">
+									<input type="text" placeholder="Username" name="username" class="form-control" />
+								</div>
+								<div class="col-lg-6">
+									<input type="password" placeholder="Password" name="password" class="form-control" />
+								</div>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td>
+								<button type="submit" class="btn btn-primary">Add</button>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</fieldset>
+		</form>
+	</div>
+
+	<div th:include="sections/footer"></div>	
+</body>
+</html>

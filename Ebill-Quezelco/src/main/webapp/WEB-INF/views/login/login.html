@@ -1,40 +1,34 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
- 	<script src="/resources/js/jquery.js" th:src="@{/resources/js/jquery.js}"></script>
-    <script src="/resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
-    <script src="/resources/js/appmain-jquery.js" th:src="@{/resources/js/appmain-jquery.js}"></script>
-	<link href="/resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Quezelco - Login</title>
+<head th:replace="sections/headtag">
 </head>
 <body>
-	<form class="form-narrow form-horizontal" name="loginForm" method="post" th:action="@{/login}" action="/login">
+	<form method="post" th:action="@{/login}" class="form-narrow form-horizontal">
 		<th:block th:if="${param.error!=null}">
-	        <div th:replace="sections/alert :: alert (type='danger', message='Invalid username and password. Please try again.')"></div>
+	        <div th:replace="sections/alert :: alert (type='danger', message=#{login.failed.msg})"></div>
 	    </th:block>
 	    <th:block th:if="${param.logout!=null}">
-	        <div th:replace="sections/alert :: alert (type='info', message='You have been successfully logged-out.')"></div>
+	        <div th:replace="sections/alert :: alert (type='info', message=#{logout.sucess.msg})"></div>
 	    </th:block>
 	    <fieldset>
 	       <legend>Please Sign In</legend>
 	       <div class="form-group">
 	           <label for="inputUsername" class="col-lg-3 control-label">Username</label>
 	           <div class="col-lg-8">
-	               <input type="text" class="form-control" id="inputUsername" placeholder="Username" name="secUsername" />
+	               <input type="text" id="inputUsername" placeholder="Username" name="secUsername" class="form-control" />
 	           </div>
 	       </div>
 	       <div class="form-group">
 	           <label for="inputPassword" class="col-lg-3 control-label">Password</label>
 	           <div class="col-lg-8">
-	               <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="secPassword" />
+	               <input type="password" id="inputPassword" placeholder="Password" name="secPassword" class="form-control" />
 	           </div>
 	       </div>
 	       <div class="form-group">
 	            <div class=".col-lg-offset-2 col-lg-10">
 	                <div class="checkbox">
 	                    <label>
-	                        <input type="checkbox" name="_spring_security_remember_me" /> Remember me
+	                        <input type="checkbox" name="rememberMe" /> Remember me
 	                    </label>
 	                </div>
 	            </div>

@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -25,14 +27,33 @@ public class UserController {
 	@Autowired
 	private UserAccountService userAccountService;
 	
-	@RequestMapping(value="/useraccounts", method=RequestMethod.GET)
-	public String viewUserAccounts(Model model) {
+	@RequestMapping(value="/users/main", method=RequestMethod.GET)
+	public String showUserMainPage(Model model) {
 		logger.info("Displaying all User Accounts in View");
 		List<UserAccount> userAccounts = new ArrayList<UserAccount>();
 		userAccounts = userAccountService.getAll();
 		model.addAttribute("userAccounts", userAccounts);
 		logger.info("User Accounts List Size: {}", userAccounts.size());
-		return "user/userAccount";
+		return "user/userMain";
 	}
+
+	@RequestMapping(value="/users/manage", method=RequestMethod.GET)
+	public String showUserModificationPage(Model model) {
+//		model.addAttribute("userAccount", new UserAccount());
+		return "user/userManagement";
+	}	
+	
+	@RequestMapping(value="/users/add", method=RequestMethod.POST)
+	public String manageUserAccounts(@ModelAttribute("userAccount") UserAccount userAccount, 
+										BindingResult result, Model model) {
+		
+		if (result.hasErrors()) {
+			showUserModificationPage(model);
+		}
+		userAccountService.create(userAccount);
+		return "redirect:/users/main";
+	}
+	
+	
 	
 }

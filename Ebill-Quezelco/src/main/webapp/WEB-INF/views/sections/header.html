@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <script src="/resources/js/jquery.js" th:src="@{/resources/js/jquery.js}"></script>
-    <script src="/resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
-    <link href="/resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>QUEZELCO - Online Billing and Monitoring System</title>
+<head th:replace="sections/headtag">
 </head>
 <body>
-	<div class="navbar navbar-default navbar-fixed-top" th:fragment="header" id="navbar-main">
+	<div th:fragment="header" id="navbar-main" class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#" th:href="@{/}">Quezelco</a>
-				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+				<a href="#" th:href="@{/}" class="navbar-brand">Quezelco</a>
+				<button type="button" data-toggle="collapse" data-target="#navbar-main" class="navbar-toggle">
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
@@ -22,7 +17,7 @@
 				<ul class="nav navbar-nav">
 					<li><a href="#" th:href="@{/}">Home</a></li>
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports <b class="caret"></b></a>
+						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Reports <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li class="dropdown-header">Billing</li>
 							<li><a href="#" th:href="@{/}">Bill type 1</a></li>
@@ -34,11 +29,11 @@
 							<li><a href="#" th:href="@{/}">Audit Trail</a></li>
 						</ul>
 					</li>
-					<li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">System Maintenance <b class="caret"></b></a>
+					<li sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown">
+						<a href="#" data-toggle="dropdown" class="dropdown-toggle">System Maintenance <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li>
-								<a href="/useraccounts" th:href="@{/useraccounts}">
+								<a href="/users/main" th:href="@{/users/main}">
 									Manage User Accounts
 								</a>
 							</li>
@@ -48,7 +43,7 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li th:if="${#authorization.expression('isAuthenticated()')}" class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<a href="#" data-toggle="dropdown" class="dropdown-toggle">
 							Welcome <span sec:authentication="name">x</span>! <b class="caret"></b>
 						</a>
 						<ul class="dropdown-menu">

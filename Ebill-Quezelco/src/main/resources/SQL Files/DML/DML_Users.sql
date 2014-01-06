@@ -11,12 +11,8 @@ VALUES
 ("John Benedic", "The Dic", "Enriquez", "johnben", "test", SYSDATE());
 
 
-INSERT INTO tblUserRoles
-(user,role)
-VALUES
-(1, 1),
-(2, 1),
-(3, 2);
+INSERT INTO tblUserRoles (user, role)
+select ua.id user, r.id role from tblUserAccount ua, tblRoles r;
 
 INSERT INTO tblRoles 
 (role)

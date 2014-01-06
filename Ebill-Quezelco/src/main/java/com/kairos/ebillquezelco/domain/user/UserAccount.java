@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+
 @Entity
 @Table(name="tblUserAccount")
 public class UserAccount implements Serializable {
@@ -32,7 +33,7 @@ public class UserAccount implements Serializable {
 
 	@Transient
 	private String fullName;
-
+	
 	@Column(unique=true)
 	private String username;
 	
@@ -97,7 +98,7 @@ public class UserAccount implements Serializable {
 		this.username = username;
 	}
 	public String getFullName() {
-		return fullName = middleName != null 
+		return fullName = !(middleName==null || "".equals(middleName)) //StringUtils.isEmpty(middleName)
 						? firstName + " " + middleName.substring(0, 1) + ". " + lastName 
 						: firstName + " " + lastName;
 	}

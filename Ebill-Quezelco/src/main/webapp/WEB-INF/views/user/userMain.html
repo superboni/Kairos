@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="sections/headtag">
+</head>
+<body>
+	<div th:replace="sections/header">&nbsp;</div>
+	
+	<div class="container">
+		<br/><br/>
+		<p>
+			<a class="btn btn-primary" th:href="@{/users/manage}">Add Users</a>
+		</p>
+		
+		<br/><br/>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Username</th>
+					<th>Date Created</th>
+					<th>Enabled</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user : ${userAccounts}">
+					<td th:text="${user.id}"></td>
+					<td th:text="${user.fullName}"></td>
+					<td th:text="${user.username}"></td>
+					<td th:text="${user.dateCreated}"></td>
+					<td th:text="${user.enabled}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div th:include="sections/footer"></div>
+</body>
+</html>
