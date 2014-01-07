@@ -7,11 +7,9 @@
 	
 	<div class="container">
 		<br/><br/>
-		<p>
-			<a class="btn btn-primary" th:href="@{/users/manage}">Add Users</a>
-		</p>
-		
-		<br/><br/>
+		<th:block th:if="${param.addSuccess}">
+	        <div th:replace="sections/alert :: alert (type='info', message=#{user.maintain.success})"></div>
+	    </th:block>
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -32,6 +30,10 @@
 				</tr>
 			</tbody>
 		</table>
+		<p>
+			<a class="btn btn-primary" th:href="@{/users/add}">Add Users</a>
+		</p>
+		<br/><br/>
 	</div>
 	
 	<div th:include="sections/footer"></div>

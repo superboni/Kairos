@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Entity
@@ -25,25 +30,40 @@ public class UserAccount implements Serializable {
 	@GeneratedValue
 	private Long id;
 	
+	@NotNull
+	@NotEmpty
+	@Size(max=70)
 	private String firstName;
 	
+	@Size(max=70)
 	private String middleName;
 	
+	@NotNull
+	@NotEmpty
+	@Size(max=70)
 	private String lastName;
 
 	@Transient
 	private String fullName;
 	
+	@NotNull
+	@NotEmpty
+	@Size(max=20)
 	@Column(unique=true)
 	private String username;
 	
+	@NotNull
+	@NotEmpty
+	@Size(min=5)
 	private String password;
 	
 	private Date dateCreated;
 	
 	private Boolean enabled;
 	
-	@ManyToMany
+	@NotNull
+	@NotEmpty
+	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tblUserRoles",
 			joinColumns=@JoinColumn(name="user"),
 			inverseJoinColumns=@JoinColumn(name="role"))

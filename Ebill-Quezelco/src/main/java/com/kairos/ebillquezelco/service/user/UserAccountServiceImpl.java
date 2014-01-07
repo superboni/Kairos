@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kairos.ebillquezelco.dao.user.UserAccountDao;
 import com.kairos.ebillquezelco.domain.user.UserAccount;
 
+
 @Service("userAccountService")
 @Transactional
 public class UserAccountServiceImpl implements UserAccountService{

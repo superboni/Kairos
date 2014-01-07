@@ -28,7 +28,7 @@ public class ApplicationConfig {
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename(MESSAGE_SOURCE);
-        messageSource.setCacheSeconds(5);
+        messageSource.setCacheSeconds(3);
         return messageSource;
     }
 	

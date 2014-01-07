@@ -5,10 +5,10 @@
 <body>
 	<form method="post" th:action="@{/login}" class="form-narrow form-horizontal">
 		<th:block th:if="${param.error!=null}">
-	        <div th:replace="sections/alert :: alert (type='danger', message=#{login.failed.msg})"></div>
+	        <div th:replace="sections/alert :: alert (type='danger', message=#{login.attempt.failed})"></div>
 	    </th:block>
 	    <th:block th:if="${param.logout!=null}">
-	        <div th:replace="sections/alert :: alert (type='info', message=#{logout.sucess.msg})"></div>
+	        <div th:replace="sections/alert :: alert (type='info', message=#{logout.attempt.sucess})"></div>
 	    </th:block>
 	    <fieldset>
 	       <legend>Please Sign In</legend>
