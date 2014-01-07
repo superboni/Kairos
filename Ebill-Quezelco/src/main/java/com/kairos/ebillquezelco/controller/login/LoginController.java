@@ -13,10 +13,10 @@ public class LoginController {
 
 	@RequestMapping(value = "/login",  method=RequestMethod.GET)
 	public String login(Principal principal, Model model) {
-		/*// If user is already authenticated, redirect them to home page.
+		// If user is already authenticated, redirect them to home page.
 		if (principal!=null) {
 			return "redirect:/";
-		}*/
+		}
 		return "login/login";
 	}
 }

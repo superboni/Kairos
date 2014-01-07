@@ -51,10 +51,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth) {
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth
 			.authenticationProvider(daoAuthenticationProvider())
-			.eraseCredentials(true);
+			.eraseCredentials(true)
+			.inMemoryAuthentication()
+                .withUser("dandelion").password("raindrops").roles("ADMIN", "USER");
 	}
 	
 	@Override
