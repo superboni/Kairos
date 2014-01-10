@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -56,7 +57,11 @@ public class GenericDaoImpl<T extends Serializable, E> implements GenericDao<T, 
 
 	@Override
 	public Long count() {
-		return (Long) entityManager.createQuery("SELECT count(c) FROM " + getEntityName() + " c", type).getSingleResult();
+		try {
+			return (Long) entityManager.createQuery("SELECT count(c) FROM " + getEntityName() + " c", type).getSingleResult();
+		} catch (NoResultException e) {
+			return new Long(0);
+		}
 	}
 
 	private String entity;

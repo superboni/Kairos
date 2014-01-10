@@ -4,6 +4,7 @@ package com.kairos.ebillquezelco.dao.user;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
@@ -47,7 +48,11 @@ public class UserAccountDaoImpl extends GenericDaoImpl<UserAccount, String> impl
 				"WHERE LOWER(ua.username) = :username " +
 				"AND enabled = 1");
 		qry.setParameter("username", username.toLowerCase());
-		return (UserAccount) qry.getSingleResult();
+		try {
+			return (UserAccount) qry.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 	@SuppressWarnings("unchecked")

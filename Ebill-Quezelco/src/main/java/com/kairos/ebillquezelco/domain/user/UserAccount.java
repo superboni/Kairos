@@ -61,8 +61,6 @@ public class UserAccount implements Serializable {
 	
 	private Boolean enabled;
 	
-	@NotNull
-	@NotEmpty
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tblUserRoles",
 			joinColumns=@JoinColumn(name="user"),
