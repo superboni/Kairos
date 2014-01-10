@@ -17,10 +17,11 @@
 			</thead>
 			<tbody>
 				<tr th:each="ann : ${announcements}">
-					<td th:text="${announcements.text}"></td>
+					<td th:text="${ann.text}"></td>
 				</tr>
 			</tbody>
 		</table>
+		<input type="date" />
 
 	</div>
 

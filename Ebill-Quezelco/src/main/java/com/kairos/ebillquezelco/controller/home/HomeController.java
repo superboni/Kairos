@@ -1,5 +1,6 @@
 package com.kairos.ebillquezelco.controller.home;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.Locale;
 
@@ -26,7 +27,7 @@ public class HomeController {
 	private AnnouncementService announcementService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Locale locale, Model model) throws ParseException {
 		logger.info("Rendering Home Page. The client locale is {}.", locale);
 		model.addAttribute("announcements", announcementService.getAllFromDateRange(new Date(), new Date()));
 		return "home/index";

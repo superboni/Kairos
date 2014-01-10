@@ -1,8 +1,11 @@
 package com.kairos.ebillquezelco.service.extras;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,12 +55,13 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	}
 
 	@Override
-	public List<Announcement> getAllFromDateRange(Date start, Date end) {
+	public List<Announcement> getAllFromDateRange(Date start, Date end) throws ParseException {
 		List<Announcement> announcements = new ArrayList<Announcement>();
 		try {
 			if (start != null || end != null) {
 				logger.info("Retrieving Announcements from: " + start.toString() + " " + end.toString());
-				return announcementDao.getAllFromDateRange(start, end);
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				return announcementDao.getAllFromDateRange(dateFormat.parse(dateFormat.format(start)), dateFormat.parse(dateFormat.format(end)));
 			}
 		} catch (RuntimeException e) {
 			logger.debug(e.getMessage());

@@ -1,4 +1,5 @@
 package com.kairos.ebillquezelco.service.extras;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface AnnouncementService {
 	public void create(Announcement announcement);
 	public void update(Announcement announcement);
 	public void delete(String pk);
-	public List<Announcement> getAllFromDateRange(Date start, Date end);
+	public List<Announcement> getAllFromDateRange(Date start, Date end) throws ParseException;
 	
 	
 }
