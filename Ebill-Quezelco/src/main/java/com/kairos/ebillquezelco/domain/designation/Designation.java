@@ -1,4 +1,4 @@
-package com.kairos.ebillquezelco.domain.user;
+package com.kairos.ebillquezelco.domain.designation;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,19 +9,24 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-@Entity
-@Table(name="tblRoles")
-public class Roles implements Serializable {
+import com.kairos.ebillquezelco.domain.user.UserAccount;
 
-	private static final long serialVersionUID = -747733913032278788L;
-	
+@Entity
+@Table(name="tblDesignation")
+public class Designation implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 394213787831045055L;
+
 	@Id
 	@GeneratedValue
 	private Long id;
+
+	private String designation;
 	
-	private String role;
-	
-	@ManyToMany(mappedBy = "roles")
+	@ManyToMany(mappedBy="designations")
 	private List<UserAccount> users;
 	
 	public Long getId() {
@@ -32,12 +37,12 @@ public class Roles implements Serializable {
 		this.id = id;
 	}
 
-	public String getRole() {
-		return role;
+	public String getDesignation() {
+		return designation;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setDesignation(String designation) {
+		this.designation = designation;
 	}
 
 	public List<UserAccount> getUsers() {
@@ -47,6 +52,5 @@ public class Roles implements Serializable {
 	public void setUsers(List<UserAccount> users) {
 		this.users = users;
 	}
-
 
 }

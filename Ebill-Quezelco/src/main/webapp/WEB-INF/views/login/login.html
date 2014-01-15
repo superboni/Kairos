@@ -2,44 +2,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="sections/headtag">
 </head>
-<body>
-	<form method="post" th:action="@{/login}" class="form-narrow form-horizontal">
-		<th:block th:if="${param.error!=null}">
-	        <div th:replace="sections/alert :: alert (type='danger', message=#{login.attempt.failed})"></div>
-	    </th:block>
-	    <th:block th:if="${param.logout!=null}">
-	        <div th:replace="sections/alert :: alert (type='info', message=#{logout.attempt.sucess})"></div>
-	    </th:block>
-	    <fieldset>
-	       <legend>Please Sign In</legend>
-	       <div class="form-group">
-	           <label for="inputUsername" class="col-lg-3 control-label">Username</label>
-	           <div class="col-lg-8">
-	               <input type="text" id="inputUsername" placeholder="Username" name="secUsername" class="form-control" />
-	           </div>
-	       </div>
-	       <div class="form-group">
-	           <label for="inputPassword" class="col-lg-3 control-label">Password</label>
-	           <div class="col-lg-8">
-	               <input type="password" id="inputPassword" placeholder="Password" name="secPassword" class="form-control" />
-	           </div>
-	       </div>
-	       <div class="form-group">
-	            <div class=".col-lg-offset-2 col-lg-10">
-	                <div class="checkbox">
-	                    <label>
-	                        <input type="checkbox" name="rememberMe" /> Remember me
-	                    </label>
-	                </div>
-	            </div>
-	        </div>
-	        <div class="form-group">
-	            <div class=".col-lg-offset-2 col-lg-10">
-	                <button type="submit" class="btn btn-primary">Sign in</button>
-	            </div>
-	        </div>
-	    </fieldset>
+<body class="login-bg">
+	<form method="post" th:action="@{/login}" class="row-fluid login-wrapper">
+		<img class="logo" th:src="@{resources/img/logo-white.png}" />
+		<div class="span4 box">
+			<div class="content-wrap">
+				<th:block th:if="${param.error!=null}">
+			        <div th:replace="sections/alert :: alert (type='danger', message=#{login.attempt.failed})"></div>
+			    </th:block>
+			    <th:block th:if="${param.logout!=null}">
+			        <div th:replace="sections/alert :: alert (type='info', message=#{logout.attempt.sucess})"></div>
+			    </th:block>
+			    <fieldset>
+					<legend>Please Sign In</legend>
+					<input type="text" id="txtUsername" placeholder="Username" name="secUsername" class="span12" />
+					<input type="password" id="txtPassword" placeholder="Password" name="secPassword" class="span12" />
+			        <div class="remember">
+			           <input type="checkbox" name="rememberMe" /> 
+			           <label> Remember me</label>
+			        </div>
+			     	<input type="submit" value="Sign in" class="btn-glow primary login"></input>
+			    </fieldset>
+			</div>
+		</div>
 	</form>
-	<div th:include="sections/footer"></div>
 </body>
 </html>

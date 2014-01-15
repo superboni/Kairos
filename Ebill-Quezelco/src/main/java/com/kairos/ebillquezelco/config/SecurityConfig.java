@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authenticationProvider(daoAuthenticationProvider())
 			.eraseCredentials(true)
 			.inMemoryAuthentication()
-                .withUser("dandelion").password("raindrops").roles("ADMIN", "USER");
+                .withUser("dandelion").password("raindrops").roles("ADMIN");
 	}
 	
 	@Override

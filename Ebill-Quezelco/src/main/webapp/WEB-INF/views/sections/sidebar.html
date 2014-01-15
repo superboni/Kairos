@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+</head>
+<body>
+	<!-- Sidebar fragment parameters are each of the menu and submenu names -->
+	<div id="sidebar-nav" th:fragment="sidebar (home, reports, users, billing, contact, help, userlist, useradd, userprofile)">
+        <ul id="dashboard-menu">
+            <li th:class="${home}">
+            	<div th:if="${home!=''}" class="pointer">
+                    <div class="arrow"></div>
+                    <div class="arrow_border"></div>
+                </div>
+                <a th:href="@{/}">
+                    <i class="icon-home"></i>
+                    <span>Home</span>
+                </a>
+            </li>            
+            <li th:if="${#authorization.expression('isAuthenticated()')}" th:class="${reports}">
+            	<div th:if="${reports!=''}" class="pointer">
+                    <div class="arrow"></div>
+                    <div class="arrow_border"></div>
+                </div>
+                <a th:href="@{/}">
+                    <i class="icon-signal"></i>
+                    <span>Reports</span>
+                </a>
+            </li>
+            <li th:if="${#authorization.expression('isAuthenticated()')}" th:class="${billing}">
+            	<div th:if="${billing!=''}" class="pointer">
+                    <div class="arrow"></div>
+                    <div class="arrow_border"></div>
+                </div>
+                <a th:href="@{/}">
+                    <i class="icon-edit"></i>
+                    <span>Billing</span>
+                </a>
+            </li>
+            <li sec:authorize="hasRole('ROLE_ADMIN')" th:class="${users}">
+            	<div th:if="${users!=''}" class="pointer">
+                    <div class="arrow"></div>
+                    <div class="arrow_border"></div>
+                </div>
+                <a class="dropdown-toggle" href="#">
+                    <i class="icon-group"></i>
+                    <span>Users</span>
+                    <i class="icon-chevron-down"></i>
+                </a>
+                <ul class="submenu" th:classappend="${users}">
+                    <li><a th:href="@{/users/main}" th:class="${userlist}">User list</a></li>
+                    <li><a th:href="@{/users/add}" th:class="${useradd}">Add a user</a></li>
+                    <li><a th:href="@{/}" th:class="${userprofile}">User profile</a></li>
+                </ul>
+            </li>
+            <li th:if="${#authorization.expression('isAuthenticated()')}" th:class="${contact}">
+           		<div th:if="${contact!=''}" class="pointer">
+                    <div class="arrow"></div>
+                    <div class="arrow_border"></div>
+                </div>
+                <a th:href="@{/}">
+                    <i class="icon-picture"></i>
+                    <span>Contact Us</span>
+                </a>
+            </li>
+            <li th:if="${#authorization.expression('isAuthenticated()')}" th:class="${help}">
+            	<div th:if="${help!=''}" class="pointer">
+                    <div class="arrow"></div>
+                    <div class="arrow_border"></div>
+                </div>
+                <a th:href="@{/}">
+                    <i class="icon-calendar-empty"></i>
+                    <span>Help</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

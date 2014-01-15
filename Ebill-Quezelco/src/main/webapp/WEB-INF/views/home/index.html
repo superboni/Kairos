@@ -1,29 +1,50 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head th:replace="sections/headtag">
+<head>
+	<link rel="stylesheet" media="screen" th:href="@{/resources/css/compiled/index.css}"/>
+	<title>Quezelco | Home</title>
 </head>
 <body>
-	<div th:replace="sections/header">&nbsp;</div>
-	
-	<div class="container">
-
-
-		<h1 th:if="${#authorization.expression('!isAuthenticated()')}"></h1><br/>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Announcements:</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="ann : ${announcements}">
-					<td th:text="${ann.text}"></td>
-				</tr>
-			</tbody>
-		</table>
-
+	<div th:replace="sections/header"></div>
+	<div th:replace="sections/sidebar :: sidebar(home='active', reports='', users='', 
+												billing='', contact='', help='', userlist='', 
+												useradd='', userprofile='')"></div>
+	<div class="content">
+		<div class="container-fluid">
+			<!-- upper main stats -->
+			<div id="main-stats">
+				<div class="row-fluid stats-row">
+					<div class="span3 stat">
+						<div class="data">
+							<span class="number">470</span> visits
+						</div>
+						<span class="date">Today</span>
+					</div>
+					<div class="span3 stat">
+						<div class="data">
+							<span class="number">3240</span> Consumers
+						</div>
+						<span class="date">January 2014</span>
+					</div>
+					<div class="span3 stat">
+						<div class="data">
+							<span class="number">544</span> Bills Generated
+						</div>
+						<span class="date">This week</span>
+					</div>
+					<div class="span3 stat last">
+						<div class="data">
+							<span class="number">&#8369; 504,340</span> sales
+						</div>
+						<span class="date">last 30 days</span>
+					</div>
+				</div>
+			</div>
+			<!-- end upper main stats -->
+			
+		</div>
 	</div>
+	<footer th:include="sections/footer"></footer>
 
-	<div th:include="sections/footer"></div>
 </body>
 </html>

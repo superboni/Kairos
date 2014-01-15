@@ -26,8 +26,35 @@ CREATE TABLE tblRoles (
 DROP TABLE tblUserRoles;
 CREATE TABLE tblUserRoles (
   id bigint(20) NOT NULL AUTO_INCREMENT,
-  user int(12) NOT NULL,
-  role int(12) NOT NULL,
+  user bigint(20) NOT NULL,
+  role bigint(20) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY UNI_ROLES (user)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE tblAnnouncement;
+CREATE TABLE tblAnnouncement (
+  id bigint(20) NOT NULL AUTO_INCREMENT,
+  text varchar(2000) NOT NULL,
+  startDate Date NOT NULL,
+  endDate Date NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE tblDesignation;
+CREATE TABLE tblDesignation (
+  id bigint(20) NOT NULL AUTO_INCREMENT,
+  designation varchar(40) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY UNI_ROLES (designation)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE tblUserDesignation;
+CREATE TABLE tblUserDesignation (
+  id bigint(20) NOT NULL AUTO_INCREMENT,
+  user bigint(20) NOT NULL,
+  designation bigint(20) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

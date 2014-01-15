@@ -12,12 +12,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.kairos.ebillquezelco.domain.designation.Designation;
+import com.kairos.ebillquezelco.domain.role.Roles;
 
 
 @Entity
@@ -61,11 +65,21 @@ public class UserAccount implements Serializable {
 	
 	private Boolean enabled;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@NotNull
+	@NotEmpty
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinTable(name="tblUserRoles",
-			joinColumns=@JoinColumn(name="user"),
-			inverseJoinColumns=@JoinColumn(name="role"))
-	private List<Roles> roles;
+			joinColumns=@JoinColumn(name="user", referencedColumnName="id"),
+			inverseJoinColumns=@JoinColumn(name="role", referencedColumnName="id"))
+	private Roles role;
+	
+	@NotNull
+	@NotEmpty
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="tblUserDesignation",
+			joinColumns=@JoinColumn(name="user", referencedColumnName="id"),
+			inverseJoinColumns=@JoinColumn(name="designation", referencedColumnName="id"))
+	private List<Designation> designations;
 	
 	public Long getId() {
 		return id;
@@ -120,12 +134,19 @@ public class UserAccount implements Serializable {
 						? firstName + " " + middleName.substring(0, 1) + ". " + lastName 
 						: firstName + " " + lastName;
 	}
-	public List<Roles> getRoles() {
-		return roles;
+	public Roles getRole() {
+		return role;
 	}
-	public void setRoles(List<Roles> roles) {
-		this.roles = roles;
+	public void setRole(Roles role) {
+		this.role = role;
 	}
+	public List<Designation> getDesignations() {
+		return designations;
+	}
+	public void setDesignations(List<Designation> designations) {
+		this.designations = designations;
+	}
+	
 	@Override
 	public String toString() {
 		return "UserAccount: " +

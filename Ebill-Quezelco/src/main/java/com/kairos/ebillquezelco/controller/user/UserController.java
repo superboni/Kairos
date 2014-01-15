@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.kairos.ebillquezelco.domain.user.UserAccount;
+import com.kairos.ebillquezelco.service.designation.DesignationService;
+import com.kairos.ebillquezelco.service.role.RoleService;
 import com.kairos.ebillquezelco.service.user.UserAccountService;
 
 /**
@@ -28,9 +30,15 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	private static final String USER_MGMT_URL = "user/userManagement";
-	
+
 	@Autowired
 	private UserAccountService userAccountService;
+	
+	@Autowired
+	private RoleService roleService;
+	
+	@Autowired
+	private DesignationService designationService;
 	
 	@Autowired
 	private Validator userValidator;
@@ -49,6 +57,7 @@ public class UserController {
 	public String showUserModificationPage(Model model) {
 		logger.info("Displaying Add User Page");
 		model.addAttribute("userAccount", new UserAccount());
+		addAllRolesAndDesignations(model);
 		return USER_MGMT_URL;
 	}
 	
@@ -56,9 +65,9 @@ public class UserController {
 	public String manageUserAccounts(@Valid @ModelAttribute("userAccount") UserAccount userAccount, 
 									Errors error, Model model) {
 		userValidator.validate(userAccount, error);
-		
 		if (error.hasErrors()) {
 			model.addAttribute("userAccount", userAccount);
+			addAllRolesAndDesignations(model);
 			return USER_MGMT_URL;
 		}
 		userAccountService.create(userAccount);
@@ -66,6 +75,10 @@ public class UserController {
 		return "redirect:/users/main";
 	}
 	
+	private void addAllRolesAndDesignations(Model model) {
+		model.addAttribute("roleList", roleService.getAll());
+		model.addAttribute("designationList", designationService.getAll());
+	}
 	
 	
 }

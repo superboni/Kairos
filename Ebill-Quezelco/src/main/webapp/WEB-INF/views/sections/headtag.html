@@ -1,14 +1,42 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="headtag">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- jQuery / JavaScript -->
 	<script th:src="@{/resources/js/jquery.js}"></script>
 	<script th:src="@{/resources/js/appmain-jquery.js}"></script>
 	<script th:src="@{/resources/js/appmain.js}"></script>
     <script th:src="@{/resources/js/bootstrap.min.js}"></script>
-    <link rel="stylesheet" media="screen" th:href="@{/resources/css/appmain.css}"/>
-	<link rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.css}"/>
-	<link rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script th:src="@{/resources/js/jquery-ui-1.10.2.custom.min.js}"></script>
+    <script th:src="@{/resources/js/theme.js}"></script>
+    <script th:src="@{/resources/js/select2.js}"></script>
+    
+    <!-- bootstrap -->
+	<link rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap/bootstrap.css}"/>
+    <link rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap/bootstrap-responsive.css}"/>
+	<link rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap/bootstrap-overrides.css}"/>
+
+	<!-- global styles -->	
+	<link rel="stylesheet" media="screen" th:href="@{/resources/css/appmain.css}"/>
+	<link rel="stylesheet" media="screen" th:href="@{/resources/css/layout.css}"/>
+    <link rel="stylesheet" media="screen" th:href="@{/resources/css/elements.css}"/>
+	<link rel="stylesheet" media="screen" th:href="@{/resources/css/icons.css}"/>
+	
+	<!-- libraries -->
+	<link rel="stylesheet" media="screen" th:href="@{/resources/css/lib/font-awesome.css}"/>
+	<link rel="stylesheet" media="screen" th:href="@{/resources/css/lib/jquery-ui-1.10.2.custom.css}"/>
+	
+	<!-- page specific styles -->
+	<link rel="stylesheet" media="screen" th:href="@{/resources/css/compiled/signin.css}"/>
+	
+	<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
 	<title>Quezelco</title>
 </head>
 <body>

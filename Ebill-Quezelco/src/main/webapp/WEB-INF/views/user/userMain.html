@@ -1,41 +1,48 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="sections/headtag">
+<head>
+	<link rel="stylesheet" media="screen" th:href="@{/resources/css/compiled/user-list.css}" />
+	<title>Quezelco | Users</title>
 </head>
 <body>
-	<div th:replace="sections/header">&nbsp;</div>
-	
-	<div class="container">
-		<br/><br/>
-		<th:block th:if="${param.addSuccess}">
-	        <div th:replace="sections/alert :: alert (type='info', message=#{user.maintain.success})"></div>
-	    </th:block>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Name</th>
-					<th>Username</th>
-					<th>Date Created</th>
-					<th>Enabled</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="user : ${userAccounts}">
-					<td th:text="${user.id}"></td>
-					<td th:text="${user.fullName}"></td>
-					<td th:text="${user.username}"></td>
-					<td th:text="${user.dateCreated}"></td>
-					<td th:text="${user.enabled}"></td>
-				</tr>
-			</tbody>
-		</table>
-		<p>
-			<a class="btn btn-primary" th:href="@{/users/add}">Add Users</a>
-		</p>
-		<br/><br/>
+	<div th:replace="sections/header"></div>
+	<div th:replace="sections/sidebar :: sidebar(home='', reports='', users='active', 
+												billing='', contact='', help='', userlist='active', 
+												useradd='', userprofile='')"></div>
+	<div class="content">
+		<div class="container-fluid">
+			<div id="pad-wrapper" class="users-list">
+				<div class="row-fluid header">
+                    <h3>Users</h3>
+                </div>
+                <div class="row-fluid header">
+					<th:block th:if="${param.addSuccess}">
+				        <div th:replace="sections/alert :: alert (type='info', message=#{user.maintain.success})"></div>
+				    </th:block>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Name</th>
+								<th>Username</th>
+								<th>Date Created</th>
+								<th>Enabled</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="user : ${userAccounts}">
+								<td th:text="${user.id}"></td>
+								<td th:text="${user.fullName}"></td>
+								<td th:text="${user.username}"></td>
+								<td th:text="${user.dateCreated}"></td>
+								<td th:text="${user.enabled}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 	</div>
-	
-	<div th:include="sections/footer"></div>
+	<footer th:include="sections/footer"></footer>
 </body>
 </html>

@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kairos.ebillquezelco.dao.user.UserAccountDao;
-import com.kairos.ebillquezelco.domain.user.Roles;
 import com.kairos.ebillquezelco.domain.user.UserAccount;
 
 @Service("userDetailsService")
@@ -24,6 +23,7 @@ import com.kairos.ebillquezelco.domain.user.UserAccount;
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+	private static final String ROLE_PREFIX = "ROLE_";
 	
 	@Autowired
 	private UserAccountDao userAccountDao;
@@ -45,11 +45,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	private Collection<GrantedAuthority> createAuthorities(UserAccount userAccount) {
 		Collection<GrantedAuthority> gaList = new ArrayList<GrantedAuthority>();
-		for (Roles role : userAccount.getRoles()) {
-			String strRole = role.getRole();
-			logger.info("Adding Role:" + strRole);
-			gaList.add(new SimpleGrantedAuthority(strRole));
-		}
+		StringBuffer sb = new StringBuffer(ROLE_PREFIX);
+		String strRole = userAccount.getRole().getRole();
+		sb.append(strRole);
+		logger.info("Adding Role: {}", sb.toString());
+		gaList.add(new SimpleGrantedAuthority(sb.toString()));
 		return gaList;
 	}
 	
