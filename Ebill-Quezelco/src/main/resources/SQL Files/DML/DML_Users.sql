@@ -1,3 +1,16 @@
+INSERT INTO tblUserAccount
+(firstName,
+middleName,
+lastName,
+username,
+password,
+dateCreated,
+role_id)
+VALUES
+("Jenmart", "Pelaez", "Bonifacio", "superboni", "test", SYSDATE(), 1),
+("Mary Mae", "Francisco", "Villanueva", "maepoinkz", "test", SYSDATE(), 1),
+("John Benedic", "The Dic", "Enriquez", "johnben", "test", SYSDATE(), 1);
+
 INSERT INTO tblUserDesignation
 (user, designation)
 VALUES

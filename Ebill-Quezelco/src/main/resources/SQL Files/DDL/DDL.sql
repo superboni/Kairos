@@ -9,8 +9,9 @@ CREATE TABLE tblUserAccount (
   lastName varchar(70) NOT NULL,
   username varchar(20) NOT NULL,
   password varchar(200) NOT NULL,
-  dateCreated timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  dateCreated date NOT NULL,
   enabled BIT DEFAULT 1 NOT NULL,
+  role_id bigint(20) NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY UNI_USERACCOUNT (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -21,15 +22,6 @@ CREATE TABLE tblRoles (
   role varchar(50) NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY UNI_ROLES (role)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-DROP TABLE tblUserRoles;
-CREATE TABLE tblUserRoles (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
-  user bigint(20) NOT NULL,
-  role bigint(20) NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE KEY UNI_ROLES (user)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE tblAnnouncement;
