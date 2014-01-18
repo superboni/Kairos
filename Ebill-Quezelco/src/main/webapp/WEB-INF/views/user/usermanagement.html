@@ -47,7 +47,6 @@
 								<li th:each="err : ${#fields.errors('lastName')}" th:text="${err}">msg</li>
 							</ul>
 						</div>
-									
 						<div class="span12 field-box">
 							<label for="txtUsername">Username:</label>
 							<input type="text" id="txtUsername" th:field="*{username}" class="span7" />
@@ -62,23 +61,27 @@
 								<li th:each="err : ${#fields.errors('password')}" th:text="${err}">msg</li>
 							</ul>
 						</div>
-								
 						<div class="span12 field-box">
 							<label for="selRoles">Roles:</label>
-							<select id="selRoles" th:field="*{role}" class="select2">
+							<select id="selRoles" name="role" class="select2">
 								<option value="" />
-							    <option th:each="role: ${roleList}" th:value="${role}" 
-							    		th:text="${role.role}" />
+							    <option th:each="role: ${roleList}" th:value="${role.id}" 
+							    		th:text="${role.role}" th:selected="${selectedRole==role.id}" />
 							</select>
+							<ul class="error">
+								<li th:each="err : ${#fields.errors('role')}" th:text="${err}">msg</li>
+							</ul>
 						</div>
 						<div class="span12 field-box">
 							<label for="selDesignations">Town Designations:</label>
-							<select id="selDesignations" multiple="" th:field="*{designations}" class="select2">
+							<select id="selDesignations" multiple="" name="designations" class="select2">
 							    <option th:each="designation: ${designationList}" th:value="${designation.id}" 
-							    		th:text="${designation.designation}" />
+							    		th:text="${designation.designation}" th:selected="${selectedDesignationList.contains(designation.id)}" />
 							</select>
+							<ul class="error">
+								<li th:each="err : ${#fields.errors('designations')}" th:text="${err}">msg</li>
+							</ul>
 						</div>
-						
 						<input type="submit" value="Create User" class="btn-glow primary" />
 					</fieldset>
 				</form>
@@ -109,12 +112,13 @@
     <script>
     	$(function () {
    			$("#selRoles").select2({
-   				width: "500px",
+   				width: "300px",
    		        placeholder: "Select a role:",
+   		        allowClear: true,
    		     	closeOnSelect: true
    		    });
    			$("#selDesignations").select2({
-   				width: "500px",
+   				width: "300px",
    		        placeholder: "Select designations:",
    		     	closeOnSelect: true
    		    });

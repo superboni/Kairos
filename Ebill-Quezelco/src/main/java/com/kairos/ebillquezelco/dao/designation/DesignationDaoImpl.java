@@ -8,7 +8,7 @@ import com.kairos.ebillquezelco.domain.designation.Designation;
 
 @Repository("designationDao")
 @Transactional
-public class DesignationDaoImpl extends GenericDaoImpl<Designation, String> implements DesignationDao {
+public class DesignationDaoImpl extends GenericDaoImpl<Designation, Long> implements DesignationDao {
 
 
 }

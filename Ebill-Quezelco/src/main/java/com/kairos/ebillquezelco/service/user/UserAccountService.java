@@ -11,7 +11,7 @@ public interface UserAccountService {
 	List<UserAccount> getAll();
 	List<UserAccount> getByName(String name);
 	List<UserAccount> getAllEnabled();
-	UserAccount getById(String pk);
+	UserAccount getById(Long pk);
 	UserAccount getByUsername(String username);
 	
 }

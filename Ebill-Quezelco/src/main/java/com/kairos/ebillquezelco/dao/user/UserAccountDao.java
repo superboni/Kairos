@@ -6,7 +6,7 @@ import java.util.List;
 import com.kairos.ebillquezelco.dao.GenericDao;
 import com.kairos.ebillquezelco.domain.user.UserAccount;
 
-public interface UserAccountDao extends GenericDao<UserAccount, String> {
+public interface UserAccountDao extends GenericDao<UserAccount, Long> {
 
 	public List<UserAccount> getByName(String name);
 	public UserAccount getByUsername(String username);

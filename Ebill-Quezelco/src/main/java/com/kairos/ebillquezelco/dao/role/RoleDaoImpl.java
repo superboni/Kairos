@@ -8,7 +8,7 @@ import com.kairos.ebillquezelco.domain.role.Roles;
 
 @Repository("roleDao")
 @Transactional
-public class RoleDaoImpl extends GenericDaoImpl<Roles, String> implements RoleDao {
+public class RoleDaoImpl extends GenericDaoImpl<Roles, Long> implements RoleDao {
 
 
 }

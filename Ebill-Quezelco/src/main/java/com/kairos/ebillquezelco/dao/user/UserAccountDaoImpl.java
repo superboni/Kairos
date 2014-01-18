@@ -15,7 +15,7 @@ import com.kairos.ebillquezelco.domain.user.UserAccount;
 
 @Repository("userAccountDao")
 @Transactional
-public class UserAccountDaoImpl extends GenericDaoImpl<UserAccount, String> implements UserAccountDao {
+public class UserAccountDaoImpl extends GenericDaoImpl<UserAccount, Long> implements UserAccountDao {
 
 	@SuppressWarnings("unchecked")
 	@Override

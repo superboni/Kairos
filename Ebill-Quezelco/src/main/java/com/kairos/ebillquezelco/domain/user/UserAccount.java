@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -66,16 +65,12 @@ public class UserAccount implements Serializable {
 	private Boolean enabled;
 	
 	@NotNull
-	@NotEmpty
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinTable(name="tblUserRoles",
-			joinColumns=@JoinColumn(name="user", referencedColumnName="id"),
-			inverseJoinColumns=@JoinColumn(name="role", referencedColumnName="id"))
+	@ManyToOne
+	@JoinColumn(name="role_id")
 	private Roles role;
 	
 	@NotNull
-	@NotEmpty
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany
 	@JoinTable(name="tblUserDesignation",
 			joinColumns=@JoinColumn(name="user", referencedColumnName="id"),
 			inverseJoinColumns=@JoinColumn(name="designation", referencedColumnName="id"))
@@ -130,7 +125,7 @@ public class UserAccount implements Serializable {
 		this.username = username;
 	}
 	public String getFullName() {
-		return fullName = !(middleName==null || "".equals(middleName)) //StringUtils.isEmpty(middleName)
+		return fullName = !(middleName==null || "".equals(middleName))
 						? firstName + " " + middleName.substring(0, 1) + ". " + lastName 
 						: firstName + " " + lastName;
 	}
@@ -138,8 +133,22 @@ public class UserAccount implements Serializable {
 		return role;
 	}
 	public void setRole(Roles role) {
+	  /*// Consistency in relationship 
+	 	// prevent endless loop
+		if (sameAsFormer(role))
+			return;
+		// set new owner
+		Roles oldRole = this.role;
+		this.role = role;
+		
+		if (oldRole!=null)
+			oldRole.removeUserAccounts(this);
+		
+		if (role!=null)
+			role.addUserAccount(this);*/
 		this.role = role;
 	}
+	
 	public List<Designation> getDesignations() {
 		return designations;
 	}
@@ -157,7 +166,29 @@ public class UserAccount implements Serializable {
 				this.username + " " + 
 				this.password + " " + 
 				String.valueOf(this.dateCreated) + " " + 
-				String.valueOf(this.enabled);
+				String.valueOf(this.enabled) + " " + 
+				this.role.getRole().toString() + " " +
+				this.designations.size();
+	}
+	
+	/*private boolean sameAsFormer(Roles newRole) {
+	    return role==null? newRole == null : role.equals(newRole);
+	}*/
+	
+	public void addDesignation(Designation des) {
+		// prevent endless loop
+		if (designations.contains(des))
+			return;
+		designations.add(des);
+		des.addUserAccount(this);
+	}
+	
+	public void removeDesignation(Designation des) {
+		// prevent endless loop
+		if (designations.contains(des))
+			return;
+		designations.remove(des);
+		des.removeUserAccounts(this);
 	}
 	
 }

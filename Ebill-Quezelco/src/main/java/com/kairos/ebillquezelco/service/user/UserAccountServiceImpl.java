@@ -1,6 +1,7 @@
 package com.kairos.ebillquezelco.service.user;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -30,14 +31,18 @@ public class UserAccountServiceImpl implements UserAccountService{
 	public void create(UserAccount userAccount) {
 		try {
 			if (userAccount!=null) {
-				//Set to default enabled value
+				// SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				
+				//Set to default values
 				userAccount.setEnabled(true);
+				userAccount.setDateCreated(new Date());
 				//Encrypt password before storing to DB
 				userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
 				logger.info("Creating a new UserAccount entity: " + userAccount.toString());
 				userAccountDao.create(userAccount);
 			}
 		} catch (RuntimeException e) {
+			System.out.println(e);
 			logger.debug(e.getMessage());
 		}
 	}
@@ -80,7 +85,7 @@ public class UserAccountServiceImpl implements UserAccountService{
 	}
 
 	@Override
-	public UserAccount getById(String pk) {
+	public UserAccount getById(Long pk) {
 		UserAccount userAccount = new UserAccount();
 		try {
 			if (pk!=null) {

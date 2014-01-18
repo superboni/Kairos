@@ -30,5 +30,16 @@ public class RoleServiceImpl implements RoleService {
 			return null;
 		}
 	}
+
+	@Override
+	public Roles getById(Long id) {
+		logger.info("Retrieving a Role entity by id: {}", id);
+		try {
+			return roleDao.getById(id);
+		} catch (RuntimeException e) {
+			logger.debug(e.getMessage());
+			return null;
+		}
+	}
 	
 }

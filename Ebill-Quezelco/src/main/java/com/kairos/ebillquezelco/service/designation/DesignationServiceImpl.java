@@ -1,5 +1,6 @@
 package com.kairos.ebillquezelco.service.designation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -25,6 +26,31 @@ public class DesignationServiceImpl implements DesignationService {
 		logger.info("Retrieving all Designation entities");
 		try {
 			return designationDao.getAll();
+		} catch (RuntimeException e) {
+			logger.debug(e.getMessage());
+			return null;
+		}
+	}
+	
+	@Override
+	public List<Designation> getAllByIds(List<Long> ids) {
+		List<Designation> designations = new ArrayList<Designation>();
+		if (ids.size()!=0) {
+			StringBuffer sb = new StringBuffer("");
+			for (Long id: ids) {
+				sb.append(id);
+				designations.add(designationDao.getById(id));
+			}
+			logger.info("Retrieving Designation entities from IDs: {}", sb.toString());
+		}
+		return designations;
+	}
+
+	@Override
+	public Designation getById(Long id) {
+		logger.info("Retrieving a Designation entity from ID: {}", id.toString());
+		try {
+			return designationDao.getById(id);
 		} catch (RuntimeException e) {
 			logger.debug(e.getMessage());
 			return null;

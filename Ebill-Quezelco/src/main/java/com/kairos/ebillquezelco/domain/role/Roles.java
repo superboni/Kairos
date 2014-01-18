@@ -1,6 +1,7 @@
 package com.kairos.ebillquezelco.domain.role;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -8,6 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.kairos.ebillquezelco.domain.user.UserAccount;
 
@@ -21,10 +25,13 @@ public class Roles implements Serializable {
 	@GeneratedValue
 	private Long id;
 	
+	@NotNull
+	@NotEmpty
 	private String role;
 	
+	@NotNull
 	@OneToMany(mappedBy = "role")
-	private List<UserAccount> users;
+	private List<UserAccount> users = new ArrayList<UserAccount>();
 	
 	public Long getId() {
 		return id;
@@ -49,6 +56,22 @@ public class Roles implements Serializable {
 	public void setUsers(List<UserAccount> users) {
 		this.users = users;
 	}
-
-
+	
+	/*public void addUserAccount(UserAccount user) {
+		// prevent endless loop
+		if (users.contains(user)) 
+			return;
+		// add new user
+		users.add(user);
+		user.setRole(this);
+	}
+	
+	public void removeUserAccounts(UserAccount user) {
+		// prevent endless loop
+		if (!users.contains(user))
+			return;
+		users.remove(user);
+		user.setRole(null);
+	}*/
+	
 }
