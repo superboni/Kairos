@@ -46,10 +46,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private Collection<GrantedAuthority> createAuthorities(UserAccount userAccount) {
 		Collection<GrantedAuthority> gaList = new ArrayList<GrantedAuthority>();
 		StringBuffer sb = new StringBuffer(ROLE_PREFIX);
-		String strRole = userAccount.getRole().getRole();
-		sb.append(strRole);
-		logger.info("Adding Role: {}", sb.toString());
-		gaList.add(new SimpleGrantedAuthority(sb.toString()));
+		String rawRole = userAccount.getRole().getRole();
+		sb.append(rawRole);
+		String secRole = sb.toString().replace(" " , "_");
+		logger.info("Adding Role: {}", secRole);
+		gaList.add(new SimpleGrantedAuthority(secRole));
 		return gaList;
 	}
 	

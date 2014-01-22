@@ -15,6 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 
+import com.kairos.ebillquezelco.domain.role.SecurityRoles;
+
 
 @Configuration
 @EnableWebSecurity
@@ -32,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public TokenBasedRememberMeServices rememberMeServices() {
 		TokenBasedRememberMeServices rememberMeServices = new TokenBasedRememberMeServices(REMEMBER_ME_KEY, userDetailsService);
 		rememberMeServices.setParameter("rememberMe");
-		rememberMeServices.setCookieName("menggay");
+		rememberMeServices.setCookieName("cookieMonster");
 		return rememberMeServices;
 	}
 	
@@ -56,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authenticationProvider(daoAuthenticationProvider())
 			.eraseCredentials(true)
 			.inMemoryAuthentication()
-                .withUser("dandelion").password("raindrops").roles("ADMIN");
+                .withUser("dandelion").password("raindrops").roles(SecurityRoles.SYSTEM_ADMIN.toString());
 	}
 	
 	@Override
@@ -65,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     		.csrf()
 				.disable()
 			.authorizeRequests()
-				.antMatchers("/users/**").hasRole("ADMIN")
+				.antMatchers("/users/**").hasRole(SecurityRoles.SYSTEM_ADMIN.toString())
 				.anyRequest().authenticated()
 				.and()
             .formLogin()

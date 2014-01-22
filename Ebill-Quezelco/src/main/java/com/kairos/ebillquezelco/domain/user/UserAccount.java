@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -33,7 +34,6 @@ public class UserAccount implements Serializable {
 	@GeneratedValue
 	private Long id;
 	
-	@NotNull
 	@NotEmpty
 	@Size(max=70)
 	private String firstName;
@@ -41,7 +41,6 @@ public class UserAccount implements Serializable {
 	@Size(max=70)
 	private String middleName;
 	
-	@NotNull
 	@NotEmpty
 	@Size(max=70)
 	private String lastName;
@@ -49,13 +48,14 @@ public class UserAccount implements Serializable {
 	@Transient
 	private String fullName;
 	
-	@NotNull
+	@Transient
+	private String csvDesignations;
+	
 	@NotEmpty
 	@Size(max=20)
 	@Column(unique=true)
 	private String username;
 	
-	@NotNull
 	@NotEmpty
 	@Size(min=5)
 	private String password;
@@ -69,8 +69,7 @@ public class UserAccount implements Serializable {
 	@JoinColumn(name="role_id")
 	private Roles role;
 	
-	@NotNull
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="tblUserDesignation",
 			joinColumns=@JoinColumn(name="user", referencedColumnName="id"),
 			inverseJoinColumns=@JoinColumn(name="designation", referencedColumnName="id"))
@@ -133,19 +132,6 @@ public class UserAccount implements Serializable {
 		return role;
 	}
 	public void setRole(Roles role) {
-	  /*// Consistency in relationship 
-	 	// prevent endless loop
-		if (sameAsFormer(role))
-			return;
-		// set new owner
-		Roles oldRole = this.role;
-		this.role = role;
-		
-		if (oldRole!=null)
-			oldRole.removeUserAccounts(this);
-		
-		if (role!=null)
-			role.addUserAccount(this);*/
 		this.role = role;
 	}
 	
@@ -171,10 +157,6 @@ public class UserAccount implements Serializable {
 				this.designations.size();
 	}
 	
-	/*private boolean sameAsFormer(Roles newRole) {
-	    return role==null? newRole == null : role.equals(newRole);
-	}*/
-	
 	public void addDesignation(Designation des) {
 		// prevent endless loop
 		if (designations.contains(des))
@@ -189,6 +171,18 @@ public class UserAccount implements Serializable {
 			return;
 		designations.remove(des);
 		des.removeUserAccounts(this);
+	}
+	
+	public String getCsvDesignations() {
+		String separator = ", ";
+		StringBuffer sb = new StringBuffer();
+		for (Designation des : designations) {
+			sb.append(separator);
+			sb.append(des.getDesignation());
+		}
+		return csvDesignations = (designations.size()==Designation.TOTAL_DESIGNATIONS) 
+								? "All towns" 
+								: sb.toString().substring(2);
 	}
 	
 }

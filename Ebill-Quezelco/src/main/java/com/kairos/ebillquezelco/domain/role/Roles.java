@@ -25,7 +25,6 @@ public class Roles implements Serializable {
 	@GeneratedValue
 	private Long id;
 	
-	@NotNull
 	@NotEmpty
 	private String role;
 	
@@ -56,22 +55,5 @@ public class Roles implements Serializable {
 	public void setUsers(List<UserAccount> users) {
 		this.users = users;
 	}
-	
-	/*public void addUserAccount(UserAccount user) {
-		// prevent endless loop
-		if (users.contains(user)) 
-			return;
-		// add new user
-		users.add(user);
-		user.setRole(this);
-	}
-	
-	public void removeUserAccounts(UserAccount user) {
-		// prevent endless loop
-		if (!users.contains(user))
-			return;
-		users.remove(user);
-		user.setRole(null);
-	}*/
 	
 }

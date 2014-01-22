@@ -22,11 +22,14 @@ public class UserAccountValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		UserAccount user = (UserAccount) target;
-		if (!(user.getUsername()==null || "".equals(user.getUsername()))) {
+		if (user.getId()==null && (!(user.getUsername()==null || "".equals(user.getUsername())))) {
 			if (userAccountService.getByUsername(user.getUsername())!=null) {
 				errors.rejectValue("username", "user.maintain.duplicate");
 			}
 		}
+		if (user.getDesignations()==null) {
+			errors.rejectValue("designations", "NotNull");
+		}
 	}
-
+	
 }

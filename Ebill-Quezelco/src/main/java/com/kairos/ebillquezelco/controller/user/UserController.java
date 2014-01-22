@@ -33,8 +33,8 @@ import com.kairos.ebillquezelco.service.user.UserAccountService;
 public class UserController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-	private static final String USER_MGMT_VIEW_URL = "user/usermanagement";
-	private static final String USER_MGMT_REQUEST_URL = "/users/add";
+	private static final String USER_MGMT_VIEW = "user/usermanagement";
+	private static final String USER_MAIN_VIEW = "user/usermain";
 	private static final String USER_ATTR = "userAccount";
 
 	@Autowired
@@ -53,29 +53,68 @@ public class UserController {
 	public String showUserMainPage(Model model) {
 		logger.info("Displaying all User Accounts in View");
 		model.addAttribute("userAccounts", userAccountService.getAll());
-		return "user/usermain";
+		return USER_MAIN_VIEW;
 	}
 
-	@RequestMapping(value=USER_MGMT_REQUEST_URL, method=RequestMethod.GET)
-	public String showUserModificationPage(Model model) {
+	@RequestMapping(value="/users/add", method=RequestMethod.GET)
+	public String addUserAccount(Model model) {
 		logger.info("Displaying Add User Page");
 		model.addAttribute(USER_ATTR, new UserAccount());
+		model.addAttribute("mode", "add");
 		populateSelectFields(model, new UserAccount());
-		return USER_MGMT_VIEW_URL;
+		return USER_MGMT_VIEW;
 	}
 	
-	@RequestMapping(value=USER_MGMT_REQUEST_URL, method=RequestMethod.POST)
-	public String manageUserAccounts(@Valid @ModelAttribute(USER_ATTR) UserAccount userAccount, 
+	@RequestMapping(value="/users/edit", method=RequestMethod.GET)
+	public String editUserAccount(Model model, 
+							@ModelAttribute("id") Long id) {
+		logger.info("Displaying Edit User Page");
+		UserAccount existingUser = userAccountService.getById(id);
+		model.addAttribute(USER_ATTR, existingUser);
+		model.addAttribute("mode", "edit");
+		populateSelectFields(model, existingUser);
+		return USER_MGMT_VIEW;
+	}
+	
+	@RequestMapping(value="/users/delete", method=RequestMethod.GET)
+	public String deleteUserAccount(Model model, 
+							@ModelAttribute("id") Long id) {
+		userAccountService.delete(id);
+		model.addAttribute("deleteSuccess", true);
+		return "redirect:/users/main";
+	}
+	
+	@RequestMapping(value="/users/add", method=RequestMethod.POST)
+	public String addUserAccount(@Valid @ModelAttribute(USER_ATTR) UserAccount userAccount, 
 									Errors error, Model model) {
-		userValidator.validate(userAccount, error);
-		if (error.hasErrors()) {
-			model.addAttribute(USER_ATTR, userAccount);
-			populateSelectFields(model, userAccount);
-			return USER_MGMT_VIEW_URL;
+		if (hasValidationErros(error, model, userAccount, "add")) {
+			return USER_MGMT_VIEW;
 		}
 		userAccountService.create(userAccount);
 		model.addAttribute("addSuccess", true);
 		return "redirect:/users/main";
+	}
+	
+	@RequestMapping(value="/users/edit", method=RequestMethod.POST)
+	public String editUserAccount(@Valid @ModelAttribute(USER_ATTR) UserAccount userAccount, 
+									Errors error, Model model) {
+		if (hasValidationErros(error, model, userAccount, "edit")) {
+			return USER_MGMT_VIEW;
+		}
+		userAccountService.update(userAccount);
+		model.addAttribute("editSuccess", true);
+		return "redirect:/users/main";
+	}
+	
+	private Boolean hasValidationErros(Errors error, Model model, UserAccount userAccount, String mode) {
+		userValidator.validate(userAccount, error);
+		if (error.hasErrors()) {
+			model.addAttribute(USER_ATTR, userAccount);
+			model.addAttribute("mode", mode);
+			populateSelectFields(model, userAccount);
+			return true;
+		}
+		return false;
 	}
 	
 	private void populateSelectFields(Model model, UserAccount userAccount) {

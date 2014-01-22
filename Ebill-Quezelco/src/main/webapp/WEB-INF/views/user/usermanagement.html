@@ -15,13 +15,13 @@
 		<div class="container-fluid">
 			<div id="pad-wrapper" class="new-user">
 				<div class="row-fluid header">
-                    <h3>Create a new user</h3>
+                    <h3 th:text="${(mode=='add')} ? 'Create a new user' : 'Modify user'">H</h3>
                 </div>
 				<div class="row-fluid form-wrapper">
 				
 				<!-- left column -->
 				<div class="span7 with-sidebar">
-				<form method="post" th:action="@{/users/add}" th:object="${userAccount}">
+				<form method="post" th:object="${userAccount}" th:action="${(mode=='add')} ? @{/users/add} : @{/users/edit}" >
 					<th:block th:if="${#fields.hasErrors('${userAccount.*}')}">
 						<div th:replace="sections/alert :: alert (type='danger', message=#{user.maintain.failed})">Alert</div>
 					</th:block>
@@ -82,7 +82,8 @@
 								<li th:each="err : ${#fields.errors('designations')}" th:text="${err}">msg</li>
 							</ul>
 						</div>
-						<input type="submit" value="Create User" class="btn-glow primary" />
+						<input type="hidden" th:field="*{id}" />
+						<input type="submit" value="Submit" class="btn-glow primary" />
 					</fieldset>
 				</form>
 				</div>
@@ -91,7 +92,7 @@
 				<div class="span5 form-sidebar pull-right">
 					<div class="alert alert-info hidden-tablet">
    						<i class="icon-lightbulb pull-left"></i>
-                            This form is for adding new System Users.
+                            This form is for managing System Users.
                             Please input the appropriate values for each fields in the form. <br/>
                             <b>*These messages, (business logics) should be put in the
                             Service Layer and not hard-coded in the static html.*</b>

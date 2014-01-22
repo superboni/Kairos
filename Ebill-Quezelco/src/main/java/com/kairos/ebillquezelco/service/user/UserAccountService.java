@@ -8,8 +8,9 @@ public interface UserAccountService {
 	
 	void create(UserAccount userAccount);
 	void update(UserAccount userAccount);
-	List<UserAccount> getAll();
+	void delete(Long id);
 	List<UserAccount> getByName(String name);
+	List<UserAccount> getAll();
 	List<UserAccount> getAllEnabled();
 	UserAccount getById(Long pk);
 	UserAccount getByUsername(String username);

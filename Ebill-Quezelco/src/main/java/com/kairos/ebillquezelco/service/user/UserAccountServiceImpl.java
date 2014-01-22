@@ -31,18 +31,11 @@ public class UserAccountServiceImpl implements UserAccountService{
 	public void create(UserAccount userAccount) {
 		try {
 			if (userAccount!=null) {
-				// SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-				
-				//Set to default values
-				userAccount.setEnabled(true);
-				userAccount.setDateCreated(new Date());
-				//Encrypt password before storing to DB
-				userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
+				setDefaultValues(userAccount);
 				logger.info("Creating a new UserAccount entity: " + userAccount.toString());
 				userAccountDao.create(userAccount);
 			}
 		} catch (RuntimeException e) {
-			System.out.println(e);
 			logger.debug(e.getMessage());
 		}
 	}
@@ -51,22 +44,13 @@ public class UserAccountServiceImpl implements UserAccountService{
 	public void update(UserAccount userAccount) {
 		try {
 			if (userAccount!=null) {
+				setDefaultValues(userAccount);
 				logger.info("Updating the UserAccount entity: " + userAccount.toString());
 				userAccountDao.update(userAccount);
 			}
 		} catch (RuntimeException e) {
+			e.printStackTrace();
 			logger.debug(e.getMessage());
-		}
-	}
-
-	@Override
-	public List<UserAccount> getAll() {
-		logger.info("Retrieving all active UserAccount entities");
-		try {
-			return userAccountDao.getAllEnabled();
-		} catch (RuntimeException e) {
-			logger.debug(e.getMessage());
-			return null;
 		}
 	}
 
@@ -121,6 +105,36 @@ public class UserAccountServiceImpl implements UserAccountService{
 			logger.debug(e.getMessage());
 			return null;
 		}
+	}
+	
+	@Override
+	public List<UserAccount> getAll() {
+		logger.info("Retrieving all UserAccount entities");
+		try {
+			return userAccountDao.getAll();
+		} catch (RuntimeException e) {
+			logger.debug(e.getMessage());
+			return null;
+		}
+	}
+	
+	@Override
+	public void delete(Long id) {
+		logger.info("Deleting UserAccount entity with ID: {}", id);
+		try {
+			if (id!=null) {
+				userAccountDao.delete(id);
+			}
+		} catch (RuntimeException e) {
+			logger.debug(e.getMessage());
+		}
+	}
+
+	private void setDefaultValues(UserAccount userAccount) {
+		userAccount.setEnabled(true);
+		userAccount.setDateCreated(new Date());
+		//Encrypt password before storing to DB
+		userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
 	}
 	
 }

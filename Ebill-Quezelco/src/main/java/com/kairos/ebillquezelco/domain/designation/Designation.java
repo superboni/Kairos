@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -23,16 +22,19 @@ public class Designation implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 394213787831045055L;
+	
+	/**
+	 * <b>TEMP:</b> Opt for a dynamic getter of total Designations count.
+	 */
+	public static final Integer TOTAL_DESIGNATIONS = 7;
 
 	@Id
 	@GeneratedValue
 	private Long id;
 
-	@NotNull
 	@NotEmpty
 	private String designation;
 	
-	@NotNull
 	@ManyToMany(mappedBy="designations")
 	private List<UserAccount> users = new ArrayList<UserAccount>();;
 	

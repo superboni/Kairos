@@ -36,7 +36,7 @@
                     <span>Billing</span>
                 </a>
             </li>
-            <li sec:authorize="hasRole('ROLE_ADMIN')" th:class="${users}">
+            <li sec:authorize="hasRole('ROLE_SYSTEM_ADMIN')" th:class="${users}">
             	<div th:if="${users!=''}" class="pointer">
                     <div class="arrow"></div>
                     <div class="arrow_border"></div>
