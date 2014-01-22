@@ -18,7 +18,7 @@ CREATE TABLE tblUserAccount (
 
 DROP TABLE tblRoles;
 CREATE TABLE tblRoles (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id int(10) NOT NULL AUTO_INCREMENT,
   role varchar(50) NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY UNI_ROLES (role)
@@ -36,7 +36,7 @@ CREATE TABLE tblAnnouncement (
 
 DROP TABLE tblDesignation;
 CREATE TABLE tblDesignation (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id int(10) NOT NULL AUTO_INCREMENT,
   designation varchar(40) NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY UNI_ROLES (designation)

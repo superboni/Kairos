@@ -1,45 +1,13 @@
-INSERT INTO tblUserAccount
-(firstName,
-middleName,
-lastName,
-username,
-password,
-dateCreated,
-role_id)
-VALUES
-("Jenmart", "Pelaez", "Bonifacio", "superboni", "test", SYSDATE(), 1),
-("Mary Mae", "Francisco", "Villanueva", "maepoinkz", "test", SYSDATE(), 1),
-("John Benedic", "The Dic", "Enriquez", "johnben", "test", SYSDATE(), 1);
-
-INSERT INTO tblUserDesignation
-(user, designation)
-VALUES
-(1, 2),
-(1, 7),
-(1, 4),
-(2, 1),
-(2, 3),
-(3, 5),
-(3, 6);
-
-INSERT INTO tblUserRoles
-(user, role)
-VALUES
-(1, 1),
-(2, 7),
-(3, 6);
-
 
 INSERT INTO tblRoles 
 (role)
 VALUES
-("ADMIN"),
 ("AREA MANAGER"),
 ("CAD"),
 ("CASHIER"),
 ("COLLECTOR"),
-("CONSUMER"),
-("IT PERSONNEL");
+("IT PERSONNEL"),
+("SYSTEM ADMIN");
 
 
 INSERT INTO tblDesignation 
