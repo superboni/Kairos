@@ -7,9 +7,8 @@
 </head>
 <body>
 	<div th:replace="sections/header"></div>
-	<div th:replace="sections/sidebar :: sidebar(home='', reports='', users='active', 
-												billing='', contact='', help='', userlist='active', 
-												useradd='', userprofile='')"></div>
+	<div th:replace="sections/sidebar :: sidebar(home='', reports='', billing='', 
+												consumers='', consumerlist='', maintenance='active', manageuser='active')"></div>
 	<div class="content">
 		<div class="container-fluid">
 			<div id="pad-wrapper" class="users-list">
@@ -32,7 +31,7 @@
 								<th>ID</th>
 								<th>Name</th>
 								<th>Username</th>
-								<th>Position</th>
+								<th>Role</th>
 								<th>Designations</th>
 								<th>Date Created</th>
 								<th>Enabled</th>
@@ -49,7 +48,7 @@
 								<td th:text="${user.dateCreated}"></td>
 								<td><input type="checkbox" checked="${user.enabled}" disabled="" /></td>
 								<td><a th:href="@{/users/edit(id=${user.id})}">Edit</a></td>
-								<td><a th:href="@{/users/delete(id=${user.id})}">Delete</a></td><!-- include JS for confirm delete message -->
+								<td><a id="confirm" th:href="@{/users/delete(id=${user.id})}">Delete</a></td>
 							</tr>
 						</tbody>
 					</table>
@@ -62,5 +61,19 @@
 		</div>
 	</div>
 	<footer th:include="sections/footer"></footer>
+	<script th:src="@{/resources/js/bootbox.min.js}"></script>
+	<script>
+	$(function() {
+		$("a#confirm").click(function(e) {
+			e.preventDefault();
+			var location = $(this).attr('href');
+			bootbox.confirm("If you are sure to delete this user, click OK.", function(confirmed) {
+				if (confirmed) {
+					window.location.replace(location);
+				}
+			});
+		});
+	});
+	</script>
 </body>
 </html>

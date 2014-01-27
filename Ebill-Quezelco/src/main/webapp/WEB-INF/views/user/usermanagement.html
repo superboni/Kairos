@@ -7,9 +7,8 @@
 </head>
 <body>
 	<div th:replace="sections/header"></div>
-	<div th:replace="sections/sidebar :: sidebar(home='', reports='', users='active', 
-												billing='', contact='', help='', userlist='', 
-												useradd='active', userprofile='')"></div>
+	<div th:replace="sections/sidebar :: sidebar(home='', reports='', billing='', 
+												consumers='', consumerlist='', maintenance='active', manageuser='active')"></div>
 	
 	<div class="content">
 		<div class="container-fluid">
@@ -110,6 +109,7 @@
 		</div>
 	</div>
 	<footer th:include="sections/footer"></footer>
+    <script th:src="@{/resources/js/select2.js}"></script>
     <script>
     	$(function () {
    			$("#selRoles").select2({

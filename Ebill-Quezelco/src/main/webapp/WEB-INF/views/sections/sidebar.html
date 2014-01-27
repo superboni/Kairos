@@ -4,7 +4,7 @@
 </head>
 <body>
 	<!-- Sidebar fragment parameters are each of the menu and submenu names -->
-	<div id="sidebar-nav" th:fragment="sidebar (home, reports, users, billing, contact, help, userlist, useradd, userprofile)">
+	<div id="sidebar-nav" th:fragment="sidebar (home, reports, billing, consumers, consumerlist, maintenance, manageuser)">
         <ul id="dashboard-menu">
             <li th:class="${home}">
             	<div th:if="${home!=''}" class="pointer">
@@ -36,41 +36,33 @@
                     <span>Billing</span>
                 </a>
             </li>
-            <li sec:authorize="hasRole('ROLE_SYSTEM_ADMIN')" th:class="${users}">
-            	<div th:if="${users!=''}" class="pointer">
+            <li sec:authorize="hasRole('ROLE_SYSTEM_ADMIN')" th:class="${consumers}">
+            	<div th:if="${consumers!=''}" class="pointer">
                     <div class="arrow"></div>
                     <div class="arrow_border"></div>
                 </div>
                 <a class="dropdown-toggle" href="#">
                     <i class="icon-group"></i>
-                    <span>Users</span>
+                    <span>Consumer</span>
                     <i class="icon-chevron-down"></i>
                 </a>
-                <ul class="submenu" th:classappend="${users}">
-                    <li><a th:href="@{/users/main}" th:class="${userlist}">User list</a></li>
-                    <li><a th:href="@{/users/add}" th:class="${useradd}">Add a user</a></li>
-                    <li><a th:href="@{/}" th:class="${userprofile}">User profile</a></li>
+                <ul class="submenu" th:classappend="${consumers}">
+                    <li><a th:href="@{/}" th:class="${consumerlist}">Consumer list</a></li>
                 </ul>
             </li>
-            <li th:if="${#authorization.expression('isAuthenticated()')}" th:class="${contact}">
-           		<div th:if="${contact!=''}" class="pointer">
+            <li sec:authorize="hasRole('ROLE_SYSTEM_ADMIN')" th:class="${maintenance}">
+            	<div th:if="${maintenance!=''}" class="pointer">
                     <div class="arrow"></div>
                     <div class="arrow_border"></div>
                 </div>
-                <a th:href="@{/}">
-                    <i class="icon-picture"></i>
-                    <span>Contact Us</span>
+                <a class="dropdown-toggle" href="#">
+                    <i class="icon-cog"></i>
+                    <span>Manage</span>
+                    <i class="icon-chevron-down"></i>
                 </a>
-            </li>
-            <li th:if="${#authorization.expression('isAuthenticated()')}" th:class="${help}">
-            	<div th:if="${help!=''}" class="pointer">
-                    <div class="arrow"></div>
-                    <div class="arrow_border"></div>
-                </div>
-                <a th:href="@{/}">
-                    <i class="icon-calendar-empty"></i>
-                    <span>Help</span>
-                </a>
+                <ul class="submenu" th:classappend="${maintenance}">
+                    <li><a th:href="@{/users/main}" th:class="${manageuser}">System Users</a></li>
+                </ul>
             </li>
         </ul>
     </div>
