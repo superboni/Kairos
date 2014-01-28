@@ -31,7 +31,7 @@ import com.kairos.ebillquezelco.service.user.UserAccountService;
  */
 @Controller
 public class UserController {
-	
+	// Define Constants
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	private static final String USER_MGMT_VIEW = "user/usermanagement";
 	private static final String USER_MAIN_VIEW = "user/usermain";
