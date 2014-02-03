@@ -136,5 +136,4 @@ public class UserAccountServiceImpl implements UserAccountService{
 		//Encrypt password before storing to DB
 		userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
 	}
-	
 }

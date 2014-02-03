@@ -4,6 +4,6 @@ import java.util.Date;
 
 public interface BillService {
 	void retrieveWheelRates();
-	void computeAmountByBill(String billId, String acctNbr, String oebrNbr, Date startDate, Date endDate);
-	void computeAmountByBatch();
+	void computeAmountByBill(String billId, String oebrNbr);
+	void computeAmountByBatch(Date startDate, Date endDate);
 }

@@ -1,13 +1,12 @@
 package com.kairos.ebillquezelco.dao.bill;
 
-import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import com.kairos.ebillquezelco.dao.GenericDao;
 import com.kairos.ebillquezelco.domain.bill.Bill;
 
 public interface BillDao extends GenericDao<Bill, String> {
-
-	public BigDecimal getCurrentReading(String billId, String acctNbr, String oebrNbr, Date startDate, Date endDate);
-	
+	public List<Bill> getMultipleBillsToCompute(Date startDate, Date endDate);
+	public Bill getSingleBillToCompute(String billId, String oebrNbr);
 }
