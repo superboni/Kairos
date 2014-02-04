@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kairos.ebillquezelco.dao.bill.BillDao;
+import com.kairos.ebillquezelco.dao.configuration.BillConfigurationValueDao;
 import com.kairos.ebillquezelco.domain.bill.Bill;
+import com.kairos.ebillquezelco.domain.configuration.BillConfigurationValue;
 import com.kairos.ebillquezelco.service.user.UserAccountServiceImpl;
 
 @Service("billService")
@@ -26,9 +28,17 @@ public class BillServiceImpl implements BillService {
 	@Autowired
 	private BillDao billDao;
 	
+	@Autowired
+	private BillConfigurationValueDao billConfigDao;
+	
 	@Override
 	public void retrieveWheelRates() {
-		
+		BigDecimal wheelRateIndividualValue;
+		Iterator <BillConfigurationValue> billConfigIter = billConfigDao.getwheelRates().iterator();
+		while (billConfigIter.hasNext()) {
+			wheelRateIndividualValue = BigDecimal.valueOf(Long.valueOf(billConfigIter.next().getValue().trim()));
+			wheelRates.add(wheelRateIndividualValue);
+		}
 	}
 
 	@Override
