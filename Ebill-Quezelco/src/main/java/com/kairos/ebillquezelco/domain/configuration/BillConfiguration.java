@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tblBillConficuration")
+@Table(name="tblBillConfiguration")
 public class BillConfiguration implements Serializable {
 
 	/**
