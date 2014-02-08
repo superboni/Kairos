@@ -1,6 +1,6 @@
 package com.kairos.ebillquezelco.service.adjustment;
 
-public interface Adjustment {
+public interface AdjustmentService {
 	
 	void createAdjustment(String billId, String adjType);
 	// Not yet sure for the Parameters

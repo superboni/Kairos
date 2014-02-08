@@ -50,4 +50,53 @@ CREATE TABLE tblUserDesignation (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+DROP TABLE tblBillConfiguration;
+CREATE TABLE tblBillConfiguration (
+  configName char(12) NOT NULL,
+  description varchar(200) NOT NULL,
+  PRIMARY KEY (configName)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE tblBillConfigurationValue;
+CREATE TABLE tblBillConfigurationValue (
+  configName char(12) NOT NULL,
+  sequence bigint NOT NULL,
+  configOptionName char(6) NOT NULL,
+  description varchar(200),
+  configValue varchar(20),
+  PRIMARY KEY (configName, sequence, configOptionName)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE tblBill;
+CREATE TABLE tblBill (
+billId char(12) NOT NULL,
+accountNumber char(12) NOT NULL,
+oebrNumber char(6) NOT NULL,
+monthBilled int NOT NULL,
+startDate date NOT NULL,
+endDate date NOT NULL,
+currentReading decimal NOT NULL,
+previousReading decimal NOT NULL,
+billStatus varchar(20) NOT NULL,
+billPrintDate date NOT NULL,
+latePaymentChargeSw boolean NOT NULL,
+latePaymentChargeDate date,
+currentBillAmount decimal,
+PRIMARY KEY (billId)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE tblAdjustment;
+CREATE TABLE tblAdjustment (
+adjustmentId char(12) NOT NULL,
+billId char(12) NOT NULL,
+accountNumber char(12) NOT NULL,
+adjustmentType char(6) NOT NULL,
+adjustmentStatus char(6) NOT NULL,
+adjustmentDate date NOT NULL,
+adjustmentAmount decimal NOT NULL,
+comments varchar(200),
+PRIMARY KEY (adjustmentId)
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 COMMIT;
