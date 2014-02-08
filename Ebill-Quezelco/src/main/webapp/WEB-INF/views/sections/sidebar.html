@@ -4,7 +4,8 @@
 </head>
 <body>
 	<!-- Sidebar fragment parameters are each of the menu and submenu names -->
-	<div id="sidebar-nav" th:fragment="sidebar (home, reports, billing, consumers, consumerlist, maintenance, manageuser)">
+	<div id="sidebar-nav" th:fragment="sidebar (home, reports, billing, inputbill, computebill, printbill, 
+												consumers, consumerlist, manage, systemuser)">
         <ul id="dashboard-menu">
             <li th:class="${home}">
             	<div th:if="${home!=''}" class="pointer">
@@ -31,10 +32,16 @@
                     <div class="arrow"></div>
                     <div class="arrow_border"></div>
                 </div>
-                <a th:href="@{/}">
+                <a class="dropdown-toggle" href="#">
                     <i class="icon-edit"></i>
                     <span>Billing</span>
+                    <i class="icon-chevron-down"></i>
                 </a>
+                <ul class="submenu" th:classappend="${billing}">
+                    <li><a th:href="@{/}" th:class="${inputbill}">Input Bill</a></li>
+                    <li><a th:href="@{/}" th:class="${computebill}">Compute Bill</a></li>
+                    <li><a th:href="@{/}" th:class="${printbill}">Print Bill</a></li>
+                </ul>
             </li>
             <li sec:authorize="hasRole('ROLE_SYSTEM_ADMIN')" th:class="${consumers}">
             	<div th:if="${consumers!=''}" class="pointer">
@@ -50,8 +57,8 @@
                     <li><a th:href="@{/}" th:class="${consumerlist}">Consumer list</a></li>
                 </ul>
             </li>
-            <li sec:authorize="hasRole('ROLE_SYSTEM_ADMIN')" th:class="${maintenance}">
-            	<div th:if="${maintenance!=''}" class="pointer">
+            <li sec:authorize="hasRole('ROLE_SYSTEM_ADMIN')" th:class="${manage}">
+            	<div th:if="${manage!=''}" class="pointer">
                     <div class="arrow"></div>
                     <div class="arrow_border"></div>
                 </div>
@@ -60,8 +67,8 @@
                     <span>Manage</span>
                     <i class="icon-chevron-down"></i>
                 </a>
-                <ul class="submenu" th:classappend="${maintenance}">
-                    <li><a th:href="@{/users/main}" th:class="${manageuser}">System Users</a></li>
+                <ul class="submenu" th:classappend="${manage}">
+                    <li><a th:href="@{/users/main}" th:class="${systemuser}">System Users</a></li>
                 </ul>
             </li>
         </ul>
