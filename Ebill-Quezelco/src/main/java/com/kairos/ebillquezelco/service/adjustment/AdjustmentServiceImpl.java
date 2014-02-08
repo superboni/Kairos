@@ -24,6 +24,6 @@ public class AdjustmentServiceImpl implements AdjustmentService {
 	@Override
 	public void setDefaultValue(Adjustment adj) {
 		adj.setAdjustmentDate(new Date());
-		adj.setAdjustmentStatus(adjustmentStatus);
+		adj.setAdjustmentStatus(Boolean.TRUE);
 	}
 }
