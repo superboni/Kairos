@@ -5,6 +5,11 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+@Entity
+@Table(name="tblBill")
 public class Bill implements Serializable {
 
 	/**
@@ -13,6 +18,7 @@ public class Bill implements Serializable {
 	private static final long serialVersionUID = -2357489923919785303L;
 
 	// Fields
+	@Id
 	private String billId;
 	private String accountNumber;
 	private String oebrNumber;

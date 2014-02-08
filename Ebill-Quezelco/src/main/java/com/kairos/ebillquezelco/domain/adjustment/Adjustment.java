@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -15,6 +16,7 @@ public class Adjustment implements Serializable {
 	 */
 	private static final long serialVersionUID = 1195543876643450561L;
 	
+	@Id
 	private String adjustmentId;
 	private String billId;
 	private String accountId;

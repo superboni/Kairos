@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -16,8 +17,11 @@ public class BillConfigurationValue implements Serializable{
 	private static final long serialVersionUID = -136750605839457809L;
 	
 	// Fields
+	@Id
 	private String configName;
+	@Id
 	private BigInteger sequence;
+	@Id
 	private String configOptionName;
 	private String description;
 	private String value;
