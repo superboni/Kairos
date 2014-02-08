@@ -43,14 +43,10 @@ INSERT INTO tblbillconfigurationvalue (configName, sequence, configOptionName, d
 INSERT INTO tblbillconfigurationvalue (configName, sequence, configOptionName, description, configValue) VALUES ('ADJ_TYPE', '2', 'DISCFEE', 'Disconnection Fee', 'DISCFEE');
 INSERT INTO tblbillconfigurationvalue (configName, sequence, configOptionName, description, configValue) VALUES ('ADJ_TYPE', '3', 'RECFEE', 'Reconnection Fee', 'RECFEE');
 INSERT INTO tblbillconfigurationvalue (configName, sequence, configOptionName, description, configValue) VALUES ('ADJ_TYPE', '4', 'DISC', 'Discount', 'DISC');
-INSERT INTO tblbillconfigurationvalue (configName, sequence, configOptionName, description, configValue) VALUES ('ADJ_STAT', '1', 'ACT', 'Active', 'ACT');
-INSERT INTO tblbillconfigurationvalue (configName, sequence, configOptionName, description, configValue) VALUES ('ADJ_STAT', '2', 'INACT', 'Inactive', 'INACT');
-
 
 INSERT INTO tblbillconfiguration (configName, description) VALUES ('BILL_STAT', 'Bill Status');
 INSERT INTO tblbillconfiguration (configName, description) VALUES ('WHEEL_RATE', 'Wheel Rate');
 INSERT INTO tblbillconfiguration (configName, description) VALUES ('ADJ_TYPE', 'Adjustment Type');
-INSERT INTO tblbillconfiguration (configName, description) VALUES ('ADJ_STAT', 'Adjustment Status');
 
 COMMIT;
 
