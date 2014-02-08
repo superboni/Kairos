@@ -19,7 +19,7 @@ public class Adjustment implements Serializable {
 	private String billId;
 	private String accountId;
 	private String adjustmentType;
-	private String adjustmentStatus;
+	private Boolean adjustmentStatus;
 	private Date adjustmentDate;
 	private BigDecimal adjustmentAmount;
 	private String comments;
@@ -49,10 +49,10 @@ public class Adjustment implements Serializable {
 	public void setAdjustmentType(String adjustmentType) {
 		this.adjustmentType = adjustmentType;
 	}
-	public String getAdjustmentStatus() {
+	public Boolean getAdjustmentStatus() {
 		return adjustmentStatus;
 	}
-	public void setAdjustmentStatus(String adjustmentStatus) {
+	public void setAdjustmentStatus(Boolean adjustmentStatus) {
 		this.adjustmentStatus = adjustmentStatus;
 	}
 	public Date getAdjustmentDate() {
