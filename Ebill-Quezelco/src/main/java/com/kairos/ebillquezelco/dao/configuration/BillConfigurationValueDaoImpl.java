@@ -4,9 +4,14 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.kairos.ebillquezelco.dao.GenericDaoImpl;
 import com.kairos.ebillquezelco.domain.configuration.BillConfigurationValue;
 
+@Repository("billConfigurationValueDao")
+@Transactional
 public class BillConfigurationValueDaoImpl extends GenericDaoImpl<BillConfigurationValue, String>
 		implements BillConfigurationValueDao {
 

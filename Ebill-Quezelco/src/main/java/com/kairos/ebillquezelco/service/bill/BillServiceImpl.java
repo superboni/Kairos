@@ -106,4 +106,29 @@ public class BillServiceImpl implements BillService {
 		
 		return totalCurrentCharge;
 	}
+
+	@Override
+	public void create(Bill bill) {
+		try {
+			if (bill!=null) {
+				logger.info("Creating a new Bill entity: " + bill.toString());
+				billDao.create(bill);
+			}
+		} catch (RuntimeException e) {
+			logger.debug(e.getMessage());
+		}
+	}
+
+	@Override
+	public void update(Bill bill) {
+		try {
+			if (bill!=null) {
+				logger.info("Updating the Bill entity: " + bill.toString());
+				billDao.update(bill);
+			}
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			logger.debug(e.getMessage());
+		}
+	}
 }

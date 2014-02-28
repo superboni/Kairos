@@ -4,7 +4,7 @@
 </head>
 <body>
 	<!-- Sidebar fragment parameters are each of the menu and submenu names -->
-	<div id="sidebar-nav" th:fragment="sidebar (home, reports, billing, inputbill, computebill, printbill, 
+	<div id="sidebar-nav" th:fragment="sidebar (home, reports, billing, viewbill, inputbill, computebill, printbill, 
 												consumers, consumerlist, manage, systemuser)">
         <ul id="dashboard-menu">
             <li th:class="${home}">
@@ -38,7 +38,8 @@
                     <i class="icon-chevron-down"></i>
                 </a>
                 <ul class="submenu" th:classappend="${billing}">
-                    <li><a th:href="@{/}" th:class="${inputbill}">Input Bill</a></li>
+                	<li><a th:href="@{/jobs/main}" th:class="${viewbill}">View Monthly Bills</a></li>
+                    <li><a th:href="@{/bill/add}" th:class="${inputbill}">Input Bill</a></li>
                     <li><a th:href="@{/}" th:class="${computebill}">Compute Bill</a></li>
                     <li><a th:href="@{/}" th:class="${printbill}">Print Bill</a></li>
                 </ul>
