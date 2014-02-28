@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet" media="screen" th:href="@{/resources/css/compiled/new-user.css}" />
+	<link rel="stylesheet" media="screen" th:href="@{/resources/css/lib/select2.css}" />
+	<title>Quezelco | Bill</title>
+</head>
+<body>
+<div th:replace="sections/header"></div>
+	<div th:replace="sections/sidebar :: sidebar(home='', reports='', billing='', viewbill='', inputbill='active', computebill='', printbill='', 
+												consumers='', consumerlist='', manage='active', systemuser='')"></div>
+	
+	<div class="content">
+		<div class="container-fluid">
+			<div id="pad-wrapper" class="new-user">
+				<div class="row-fluid header">
+                    <h3 th:text="${(mode=='add')} ? 'Create a new Bill' : 'Modify user'">H</h3>
+                </div>
+				<div class="row-fluid form-wrapper">
+				
+				<!-- left column -->
+				<div class="span7 with-sidebar">
+				<form method="post" th:object="${userAccount}" th:action="${(mode=='add')} ? @{/users/add} : @{/users/edit}" >
+					<th:block th:if="${#fields.hasErrors('${userAccount.*}')}">
+						<div th:replace="sections/alert :: alert (type='danger', message=#{user.maintain.failed})">Alert</div>
+					</th:block>
+					<fieldset>
+						<div class="span12 field-box">
+							<label for="txtFirstName">First Name:</label>
+							<input type="text" id="txtFirstName" th:field="*{firstName}" class="span7" />
+							<ul class="error">
+								<li th:each="err : ${#fields.errors('firstName')}" th:text="${err}">msg</li>
+							</ul>
+						</div>
+						<div class="span12 field-box">
+							<label for="txtMiddleName">Middle Name:</label>
+							<input type="text" id="txtMiddleName" th:field="*{middleName}" class="span7" />
+							<ul class="error">
+								<li th:each="err : ${#fields.errors('middleName')}" th:text="${err}">msg</li>
+							</ul>
+						</div>
+						<div class="span12 field-box">
+							<label for="txtLastName">Last Name:</label>
+							<input type="text" id="txtLastName" th:field="*{lastName}" class="span7" />
+							<ul class="error">
+								<li th:each="err : ${#fields.errors('lastName')}" th:text="${err}">msg</li>
+							</ul>
+						</div>
+						<div class="span12 field-box">
+							<label for="txtUsername">Username:</label>
+							<input type="text" id="txtUsername" th:field="*{username}" class="span7" />
+							<ul class="error">
+								<li th:each="err : ${#fields.errors('username')}" th:text="${err}">msg</li>
+							</ul>
+						</div>
+						<div class="span12 field-box">
+							<label for="txtPassword">Password:</label>
+							<input type="password" id="txtPassword" th:field="*{password}" class="span7" />
+							<ul class="error">
+								<li th:each="err : ${#fields.errors('password')}" th:text="${err}">msg</li>
+							</ul>
+						</div>
+						<div class="span12 field-box">
+							<label for="selRoles">Roles:</label>
+							<select id="selRoles" name="role" class="select2">
+								<option value="" />
+							    <option th:each="role: ${roleList}" th:value="${role.id}" 
+							    		th:text="${role.role}" th:selected="${selectedRole==role.id}" />
+							</select>
+							<ul class="error">
+								<li th:each="err : ${#fields.errors('role')}" th:text="${err}">msg</li>
+							</ul>
+						</div>
+						<div class="span12 field-box">
+							<label for="selDesignations">Town Designations:</label>
+							<select id="selDesignations" multiple="" name="designations" class="select2">
+							    <option th:each="designation: ${designationList}" th:value="${designation.id}" 
+							    		th:text="${designation.designation}" th:selected="${selectedDesignationList.contains(designation.id)}" />
+							</select>
+							<ul class="error">
+								<li th:each="err : ${#fields.errors('designations')}" th:text="${err}">msg</li>
+							</ul>
+						</div>
+						<input type="hidden" th:field="*{id}" />
+						<input type="submit" value="Submit" class="btn-glow primary" />
+					</fieldset>
+				</form>
+				</div>
+				
+				<!-- side right column -->
+				<div class="span5 form-sidebar pull-right">
+					<div class="alert alert-info hidden-tablet">
+   						<i class="icon-lightbulb pull-left"></i>
+                            This form is for managing System Users.
+                            Please input the appropriate values for each fields in the form. <br/>
+                            <b>*These messages, (business logics) should be put in the
+                            Service Layer and not hard-coded in the static html.*</b>
+					</div>
+					<h6>Please note the following while adding a user:</h6>
+					<ol>
+                        <li>All fields cannot be left blank, except for middle name.</li>
+                        <li>Password must be at least 5 characters long.</li>
+                        <li>Roles that will be assigned to each users should be blabla</li>
+                        <li>Roles Descriptions bla bla</li>
+                    </ol>
+                </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer th:include="sections/footer"></footer>
+    <script th:src="@{/resources/js/select2.js}"></script>
+    <script>
+    	$(function () {
+   			$("#selRoles").select2({
+   				width: "300px",
+   		        placeholder: "Select a role:",
+   		        allowClear: true,
+   		     	closeOnSelect: true
+   		    });
+   			$("#selDesignations").select2({
+   				width: "300px",
+   		        placeholder: "Select designations:",
+   		     	closeOnSelect: true
+   		    });
+        });
+    </script>
+</body>
+</body>
+</html>
