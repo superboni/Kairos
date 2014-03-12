@@ -70,20 +70,21 @@ CREATE TABLE tblBillConfigurationValue (
 
 DROP TABLE tblBill;
 CREATE TABLE tblBill (
-billId char(12) NOT NULL,
+id bigint(20) NOT NULL AUTO_INCREMENT,
 accountNumber char(12) NOT NULL,
 oebrNumber char(6) NOT NULL,
 monthBilled int NOT NULL,
 startDate date NOT NULL,
 endDate date NOT NULL,
+currentKwh decimal NOT NULL,
 currentReading decimal NOT NULL,
 previousReading decimal NOT NULL,
 billStatus varchar(20) NOT NULL,
-billPrintDate date NOT NULL,
+billPrintDate date,
 latePaymentChargeDate date,
 currentBillAmount decimal,
 jobId char(12),
-PRIMARY KEY (billId)
+PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 commit;
 

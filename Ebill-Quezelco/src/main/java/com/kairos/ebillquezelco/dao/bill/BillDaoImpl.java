@@ -14,9 +14,10 @@ import com.kairos.ebillquezelco.domain.bill.Bill;
 
 @Repository("billDao")
 @Transactional
-public class BillDaoImpl extends GenericDaoImpl<Bill, String> implements BillDao {
+public class BillDaoImpl extends GenericDaoImpl<Bill, Long> implements BillDao {
 
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Bill> getMultipleBillsToCompute(Date startDate, Date endDate) {
 		Query qry = entityManager.createQuery(

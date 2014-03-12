@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 @Entity
@@ -19,27 +20,21 @@ public class Bill implements Serializable {
 
 	// Fields
 	@Id
-	private String billId;
+	@GeneratedValue
+	private Long id;
+	
 	private String accountNumber;
 	private String oebrNumber;
 	private BigInteger monthBilled;
 	private Date startDate;
 	private Date endDate;
+	private BigDecimal currentKwh;
 	private BigDecimal currentReading;
 	private BigDecimal previousReading;
 	private String billStatus;
 	private Date billPrintDate;
-	private Boolean latePaymentChargeSw;
 	private Date latePaymentChargeDate;
 	private BigDecimal currentBillAmount;
-	
-	public String getBillId() {
-		return billId;
-	}
-	
-	public void setBillId(String billId) {
-		this.billId = billId;
-	}
 	
 	public String getAccountNumber() {
 		return accountNumber;
@@ -65,18 +60,6 @@ public class Bill implements Serializable {
 		this.monthBilled = month;
 	}
 	
-	public Date getStartDate() {
-		return startDate;
-	}
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-	public Date getEndDate() {
-		return endDate;
-	}
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
 	public BigDecimal getCurrentReading() {
 		return currentReading;
 	}
@@ -101,12 +84,7 @@ public class Bill implements Serializable {
 	public void setBillPrintDate(Date billPrintDate) {
 		this.billPrintDate = billPrintDate;
 	}
-	public Boolean getLatePaymentChargeSw() {
-		return latePaymentChargeSw;
-	}
-	public void setLatePaymentChargeSw(Boolean latePaymentChargeSw) {
-		this.latePaymentChargeSw = latePaymentChargeSw;
-	}
+
 	public Date getLatePaymentChargeDate() {
 		return latePaymentChargeDate;
 	}
@@ -120,5 +98,37 @@ public class Bill implements Serializable {
 
 	public void setCurrentBillAmount(BigDecimal currentBillAmount) {
 		this.currentBillAmount = currentBillAmount;
+	}
+
+	public BigDecimal getCurrentKwh() {
+		return currentKwh;
+	}
+
+	public void setCurrentKwh(BigDecimal currentKwh) {
+		this.currentKwh = currentKwh;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

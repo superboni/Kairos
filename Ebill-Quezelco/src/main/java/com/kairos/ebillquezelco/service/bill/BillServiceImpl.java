@@ -1,6 +1,7 @@
 package com.kairos.ebillquezelco.service.bill;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -15,13 +16,14 @@ import com.kairos.ebillquezelco.dao.bill.BillDao;
 import com.kairos.ebillquezelco.dao.configuration.BillConfigurationValueDao;
 import com.kairos.ebillquezelco.domain.bill.Bill;
 import com.kairos.ebillquezelco.domain.configuration.BillConfigurationValue;
+import com.kairos.ebillquezelco.domain.user.UserAccount;
 import com.kairos.ebillquezelco.service.user.UserAccountServiceImpl;
 
 @Service("billService")
 @Transactional
 public class BillServiceImpl implements BillService {
 
-	private static final Logger logger = LoggerFactory.getLogger(UserAccountServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(BillServiceImpl.class);
 	
 	private List<BigDecimal> wheelRates;
 	
@@ -112,6 +114,7 @@ public class BillServiceImpl implements BillService {
 		try {
 			if (bill!=null) {
 				logger.info("Creating a new Bill entity: " + bill.toString());
+				setDefaultValues(bill);
 				billDao.create(bill);
 			}
 		} catch (RuntimeException e) {
@@ -130,5 +133,10 @@ public class BillServiceImpl implements BillService {
 			e.printStackTrace();
 			logger.debug(e.getMessage());
 		}
+	}
+	
+	private void setDefaultValues(Bill bill) {
+		bill.setBillStatus("10");
+		bill.setMonthBilled(BigInteger.valueOf(3));
 	}
 }
