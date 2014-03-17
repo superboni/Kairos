@@ -16,11 +16,19 @@ public class ApplicationConfig {
 	
 	private static final String PERSISTENCE_PROPERTIES = "/persistence.properties";
 	private static final String MESSAGE_SOURCE = "/WEB-INF/i18n/messages";
+	private static final String APPLICATION_PROPERTIES = "/application.properties";
 
 	@Bean
 	public static PropertyPlaceholderConfigurer persistencePropsPlaceholder() {
 		PropertyPlaceholderConfigurer ppc = new PropertyPlaceholderConfigurer();
 		ppc.setLocation(new ClassPathResource(PERSISTENCE_PROPERTIES));
+		return ppc;
+	}
+	
+	@Bean
+	public static PropertyPlaceholderConfigurer applicationPropsPlaceholder() {
+		PropertyPlaceholderConfigurer ppc = new PropertyPlaceholderConfigurer();
+		ppc.setLocation(new ClassPathResource(APPLICATION_PROPERTIES));
 		return ppc;
 	}
 	
