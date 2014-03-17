@@ -20,7 +20,20 @@ public class Job implements Serializable {
 	private Long jobId;
 	
 	private String jobType;
-	private Date executedDate;
+	public Date getStartBillDate() {
+		return startBillDate;
+	}
+	public void setStartBillDate(Date startBillDate) {
+		this.startBillDate = startBillDate;
+	}
+	public Date getEndBillDate() {
+		return endBillDate;
+	}
+	public void setEndBillDate(Date endBillDate) {
+		this.endBillDate = endBillDate;
+	}
+	private Date startBillDate;
+	private Date endBillDate;
 	private String jobStatus;
 	private Date startRunDateTime;
 	private Date endRunDateTime;
@@ -35,12 +48,6 @@ public class Job implements Serializable {
 	}
 	public void setJobType(String jobType) {
 		this.jobType = jobType;
-	}
-	public Date getExecutedDate() {
-		return executedDate;
-	}
-	public void setExecutedDate(Date executedDate) {
-		this.executedDate = executedDate;
 	}
 	public String getJobStatus() {
 		return jobStatus;

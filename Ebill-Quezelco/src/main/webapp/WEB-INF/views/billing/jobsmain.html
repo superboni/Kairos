@@ -3,7 +3,7 @@
 <head>
 <title>Quezelco | Bill</title>
 </head>
-<body>
+<body onload="hideDiv()">
 	<div th:replace="sections/header"></div>
 	<div th:replace="sections/sidebar :: sidebar(home='', reports='', billing='active', viewbill='active', inputbill='', computebill='', printbill='',
 												consumers='', consumerlist='', manage='', systemuser='')"></div>
@@ -14,11 +14,12 @@
 				<div class="row-fluid header">
                     <h3>Jobs</h3>
                 </div>
-					<table class="table table-hover">
+					<table id="job-list" class="table table-hover">
 						<thead>
 							<tr>
 								<th>ID</th>
-								<th>Date</th>
+								<th>Start Bill Period</th>
+								<th>End Bill Period</th>
 								<th>Status</th>
 								<th>Start Run Date</th>
 								<th>End Run Date</th>
@@ -28,15 +29,79 @@
 						<tbody>
 							<tr th:each="job : ${jobs}">
 								<td th:text="${job.jobId}"></td>
-								<td th:text="${job.executedDate}"></td>
+								<td th:text="${job.startBillDate}"></td>
+								<td th:text="${job.endBillDate}"></td>
 								<td th:text="${job.jobStatus}"></td>
 								<td th:text="${job.startRunDateTime}"></td>
 								<td th:text="${job.endRunDateTime}"></td>
+								<td><a th:href="@{/job/detail(id=${job.jobId})}">View</a></td>
 							</tr>
 						</tbody>
 					</table>
+					<br />
+					<a class="btn-flat success pull-right runJob">
+						<span>&#43;</span> RUN A JOB
+                    </a>
+
 			</div>
+				<div class="container-fluid">
+					<div id="pad-wrapper">
+						<div class="row-fluid calendar-wrapper">
+							<div class="span12">
+
+								<!-- edit image pop up -->
+								<div class="new-event popup" id="new-event">
+									<div class="pointer">
+										<div class="arrow"></div>
+										<div class="arrow_border"></div>
+									</div>
+									<i class="close-pop table-delete"></i>
+									<h5>Run a New Job</h5> <br/>
+									<div class="field">
+									<div class="row ctrls">
+										<div class="btn-group">
+											<button class="btn glow">Select Job Type</button>
+											<button class="btn glow dropdown-toggle"
+												data-toggle="dropdown">
+												<span class="caret"></span>
+											</button>
+											<ul class="dropdown-menu">
+												<li><a href="#">Option one</a></li>
+												<li><a href="#">Option two</a></li>
+												<li><a href="#">Option three</a></li>
+												<li><a href="#">Option four</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+									<div class="field">
+										Event: <input type="text" class="event-input" />
+									</div>
+									<input type="submit" value="Create" class="btn-glow primary" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
 		</div>
 	</div>
+	
+	<!-- builds fullcalendar example -->
+    <script>
+        $(document).ready(function() {
+        	  
+            // handler to close the new event popup just for displaying purposes
+            // more documentation for fullcalendar on http://arshaw.com/fullcalendar/
+            $(".popup .close-pop").click(function () {
+                $(".new-event").fadeOut("fast");
+            });
+            
+            $(".runJob").click(function () {
+                $(".new-event").fadeIn("fast");
+            });
+        });
+        
+    </script>
 </body>
 </html>

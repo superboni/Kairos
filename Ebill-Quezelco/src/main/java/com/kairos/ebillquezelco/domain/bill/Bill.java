@@ -9,6 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+
+import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name="tblBill")
 public class Bill implements Serializable {
@@ -26,7 +29,11 @@ public class Bill implements Serializable {
 	private String accountNumber;
 	private String oebrNumber;
 	private BigInteger monthBilled;
+	
+	@DateTimeFormat (pattern="yyyy-MM-dd")
 	private Date startDate;
+	
+	@DateTimeFormat (pattern="yyyy-MM-dd")
 	private Date endDate;
 	private BigDecimal currentKwh;
 	private BigDecimal currentReading;
